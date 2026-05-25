@@ -20,6 +20,10 @@
       font-family: inherit;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     .app {
       min-height: 100vh;
       display: flex;
@@ -29,22 +33,25 @@
     }
 
     .panel {
-      width: min(95vw, 480px);
+      width: min(96vw, 520px);
+      height: min(92vh, 760px);
       background: white;
-      border-radius: 24px;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+      border-radius: 26px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .topBar {
-      padding: 20px;
+      padding: 22px;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       color: white;
     }
 
     .topBar h1 {
       margin: 0;
-      font-size: 28px;
+      font-size: 32px;
     }
 
     .topBar p {
@@ -55,19 +62,20 @@
 
     .content {
       padding: 20px;
+      overflow-y: auto;
     }
 
     .section {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .sectionTitle {
       margin: 0 0 10px;
-      font-size: 14px;
+      font-size: 13px;
       color: #64748b;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
     }
 
     .inputRow {
@@ -79,33 +87,35 @@
       width: 100%;
       padding: 14px;
       border: 2px solid #e2e8f0;
-      border-radius: 14px;
+      border-radius: 15px;
       font-size: 15px;
       outline: none;
+      background: #f8fafc;
     }
 
     input:focus {
       border-color: #6366f1;
+      background: white;
     }
 
     .primaryBtn,
     .secondaryBtn,
+    .ghostBtn,
     .chatSelectBtn,
     .sendBtn {
       border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      border-radius: 15px;
+      font-weight: 800;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
     .primaryBtn {
       width: 100%;
-      padding: 15px;
+      padding: 16px;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       color: white;
       font-size: 16px;
-      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.32);
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.33);
     }
 
     .secondaryBtn {
@@ -116,11 +126,29 @@
       white-space: nowrap;
     }
 
+    .ghostBtn {
+      padding: 12px 14px;
+      background: #f8fafc;
+      color: #475569;
+      border: 2px solid #e2e8f0;
+    }
+
     .primaryBtn:hover,
     .secondaryBtn:hover,
+    .ghostBtn:hover,
     .chatSelectBtn:hover,
     .sendBtn:hover {
       transform: translateY(-2px);
+    }
+
+    .hintBox {
+      padding: 14px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
     .chatList {
@@ -130,7 +158,7 @@
 
     .chatSelectBtn {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       background: #f8fafc;
       border: 2px solid #e2e8f0;
       color: #0f172a;
@@ -140,16 +168,20 @@
 
     .chatSelectBtn span {
       display: block;
-      margin-top: 4px;
+      margin-top: 5px;
       color: #64748b;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
     }
 
-    #chatScreen {
+    .screen {
       display: none;
-      height: min(90vh, 720px);
+      height: 100%;
       flex-direction: column;
+    }
+
+    .screen.active {
+      display: flex;
     }
 
     .chatHeader {
@@ -159,6 +191,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 14px;
     }
 
     .chatHeader h2 {
@@ -172,14 +205,18 @@
       opacity: 0.85;
     }
 
-    .backBtn {
+    .headerButtons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .iconBtn {
       border: none;
       background: rgba(255, 255, 255, 0.18);
       color: white;
       border-radius: 12px;
       padding: 10px 12px;
-      cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .messages {
@@ -193,9 +230,9 @@
     }
 
     .message {
-      max-width: 80%;
+      max-width: 82%;
       padding: 11px 13px;
-      border-radius: 16px;
+      border-radius: 17px;
       font-size: 15px;
       line-height: 1.35;
     }
@@ -212,16 +249,20 @@
       color: white;
     }
 
+    .messageName {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      opacity: 0.7;
+      margin-bottom: 4px;
+    }
+
     .sendArea {
       padding: 14px;
       display: flex;
       gap: 10px;
       background: white;
       border-top: 1px solid #e2e8f0;
-    }
-
-    #messageInput {
-      flex: 1;
     }
 
     .sendBtn {
@@ -231,7 +272,42 @@
       font-size: 15px;
     }
 
+    .settingsRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .settingsRow:last-child {
+      border-bottom: none;
+    }
+
+    .settingsRow strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .settingsRow span {
+      display: block;
+      color: #64748b;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
     @media (max-width: 520px) {
+      .app {
+        padding: 0;
+      }
+
+      .panel {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+      }
+
       .inputRow,
       .sendArea {
         flex-direction: column;
@@ -241,10 +317,6 @@
       .sendBtn {
         padding: 14px;
       }
-
-      .panel {
-        border-radius: 20px;
-      }
     }
   </style>
 </head>
@@ -253,13 +325,18 @@
   <main class="app">
     <div class="panel">
 
-      <section id="mainMenu">
+      <section id="mainMenu" class="screen active">
         <div class="topBar">
           <h1>Super Chat</h1>
-          <p>Create or join a private chat room.</p>
+          <p>Create, join, and manage simple chat rooms.</p>
         </div>
 
         <div class="content">
+          <div class="section">
+            <p class="sectionTitle">Display Name</p>
+            <input id="nameInput" type="text" placeholder="Enter your name">
+          </div>
+
           <div class="section">
             <p class="sectionTitle">Create Chat</p>
             <button id="makeChatBtn" class="primaryBtn">Make New Chat</button>
@@ -277,33 +354,47 @@
             <p class="sectionTitle">Your Chats</p>
 
             <div id="chatList" class="chatList">
-              <button class="chatSelectBtn">
+              <button class="chatSelectBtn" onclick="openChat('Example Chat', 'ABC123')">
                 Example Chat
-                <span>ID: ABC123</span>
+                <span>ID: ABC123 • 2 messages</span>
               </button>
 
-              <button class="chatSelectBtn">
+              <button class="chatSelectBtn" onclick="openChat('Friends Room', 'XYZ789')">
                 Friends Room
-                <span>ID: XYZ789</span>
+                <span>ID: XYZ789 • 0 messages</span>
               </button>
             </div>
+          </div>
+
+          <div class="hintBox">
+            Your actual chat creation, saving, loading, and joining logic can be added later. These buttons currently open the chat screen.
           </div>
         </div>
       </section>
 
-      <section id="chatScreen">
+      <section id="chatScreen" class="screen">
         <div class="chatHeader">
           <div>
-            <h2 id="chatNameDisplay">Example Chat</h2>
-            <p id="chatIdDisplay">Chat ID: ABC123</p>
+            <h2 id="chatNameDisplay">New Chat</h2>
+            <p id="chatIdDisplay">Chat ID: TEMP</p>
           </div>
 
-          <button id="backBtn" class="backBtn">Back</button>
+          <div class="headerButtons">
+            <button id="settingsBtn" class="iconBtn">Settings</button>
+            <button id="backBtn" class="iconBtn">Back</button>
+          </div>
         </div>
 
         <div id="messages" class="messages">
-          <div class="message other">Welcome to the chat.</div>
-          <div class="message mine">This is what your messages look like.</div>
+          <div class="message other">
+            <span class="messageName">System</span>
+            Chat opened.
+          </div>
+
+          <div class="message mine">
+            <span class="messageName">You</span>
+            This is a test message.
+          </div>
         </div>
 
         <div class="sendArea">
@@ -312,10 +403,154 @@
         </div>
       </section>
 
+      <section id="settingsScreen" class="screen">
+        <div class="chatHeader">
+          <div>
+            <h2>Chat Settings</h2>
+            <p>Basic room controls.</p>
+          </div>
+
+          <button id="closeSettingsBtn" class="iconBtn">Back</button>
+        </div>
+
+        <div class="content">
+          <div class="section">
+            <p class="sectionTitle">Room Info</p>
+
+            <div class="settingsRow">
+              <div>
+                <strong>Chat Name</strong>
+                <span id="settingsChatName">New Chat</span>
+              </div>
+            </div>
+
+            <div class="settingsRow">
+              <div>
+                <strong>Chat ID</strong>
+                <span id="settingsChatId">TEMP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <p class="sectionTitle">Actions</p>
+
+            <button id="copyChatIdBtn" class="primaryBtn">Copy Chat ID</button>
+            <br><br>
+            <button id="leaveChatBtn" class="ghostBtn">Leave Chat</button>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
   <script type="module">
+    const mainMenu = document.getElementById("mainMenu");
+    const chatScreen = document.getElementById("chatScreen");
+    const settingsScreen = document.getElementById("settingsScreen");
+
+    const makeChatBtn = document.getElementById("makeChatBtn");
+    const joinChatBtn = document.getElementById("joinChatBtn");
+    const backBtn = document.getElementById("backBtn");
+    const settingsBtn = document.getElementById("settingsBtn");
+    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+    const copyChatIdBtn = document.getElementById("copyChatIdBtn");
+    const leaveChatBtn = document.getElementById("leaveChatBtn");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const chatIdInput = document.getElementById("chatIdInput");
+    const messageInput = document.getElementById("messageInput");
+
+    const chatNameDisplay = document.getElementById("chatNameDisplay");
+    const chatIdDisplay = document.getElementById("chatIdDisplay");
+    const settingsChatName = document.getElementById("settingsChatName");
+    const settingsChatId = document.getElementById("settingsChatId");
+    const messages = document.getElementById("messages");
+
+    let currentChatName = "New Chat";
+    let currentChatId = "TEMP";
+
+    function showScreen(screen) {
+      mainMenu.classList.remove("active");
+      chatScreen.classList.remove("active");
+      settingsScreen.classList.remove("active");
+
+      screen.classList.add("active");
+    }
+
+    window.openChat = function(name, id) {
+      currentChatName = name;
+      currentChatId = id;
+
+      chatNameDisplay.textContent = name;
+      chatIdDisplay.textContent = "Chat ID: " + id;
+
+      settingsChatName.textContent = name;
+      settingsChatId.textContent = id;
+
+      showScreen(chatScreen);
+    }
+
+    makeChatBtn.onclick = function() {
+      openChat("New Chat", "TEMP");
+    }
+
+    joinChatBtn.onclick = function() {
+      const typedId = chatIdInput.value.trim();
+
+      if (typedId === "") {
+        openChat("Joined Chat", "TEMP");
+      } else {
+        openChat("Joined Chat", typedId);
+      }
+    }
+
+    backBtn.onclick = function() {
+      showScreen(mainMenu);
+    }
+
+    settingsBtn.onclick = function() {
+      showScreen(settingsScreen);
+    }
+
+    closeSettingsBtn.onclick = function() {
+      showScreen(chatScreen);
+    }
+
+    leaveChatBtn.onclick = function() {
+      showScreen(mainMenu);
+    }
+
+    copyChatIdBtn.onclick = function() {
+      navigator.clipboard.writeText(currentChatId);
+      copyChatIdBtn.textContent = "Copied";
+      setTimeout(function() {
+        copyChatIdBtn.textContent = "Copy Chat ID";
+      }, 1000);
+    }
+
+    sendBtn.onclick = function() {
+      const text = messageInput.value.trim();
+
+      if (text === "") {
+        return;
+      }
+
+      const newMessage = document.createElement("div");
+      newMessage.className = "message mine";
+      newMessage.innerHTML = '<span class="messageName">You</span>' + text;
+
+      messages.appendChild(newMessage);
+      messageInput.value = "";
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    messageInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        sendBtn.click();
+      }
+    });
   </script>
 </body>
 </html>
