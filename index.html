@@ -11,72 +11,309 @@
     body {
       margin: 0;
       min-height: 100vh;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      font-family: Arial, sans-serif;
+      color: #0f172a;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #eef2ff, #f8fafc);
-      font-family: Arial, sans-serif;
+      padding: 18px;
     }
 
-    #mainMenu {
-      width: min(90vw, 420px);
-      padding: 28px;
-      border-radius: 24px;
+    .panel {
+      width: min(95vw, 480px);
       background: white;
+      border-radius: 24px;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
-      text-align: center;
+      overflow: hidden;
     }
 
-    #mainMenu h1 {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 7vw, 42px);
-    }
-
-    .subtitle {
-      margin: 0 0 24px;
-      color: #64748b;
-      font-size: 15px;
-    }
-
-    .smallWhite {
-      width: 100%;
-      min-height: 58px;
-      border: none;
-      border-radius: 16px;
+    .topBar {
+      padding: 20px;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       color: white;
-      font-size: clamp(17px, 4vw, 22px);
+    }
+
+    .topBar h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .topBar p {
+      margin: 6px 0 0;
+      opacity: 0.85;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 18px;
+    }
+
+    .sectionTitle {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #64748b;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .inputRow {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #6366f1;
+    }
+
+    .primaryBtn,
+    .secondaryBtn,
+    .chatSelectBtn,
+    .sendBtn {
+      border: none;
+      border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+      font-weight: 700;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .smallWhite:hover {
+    .primaryBtn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      font-size: 16px;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.32);
+    }
+
+    .secondaryBtn {
+      padding: 0 18px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .primaryBtn:hover,
+    .secondaryBtn:hover,
+    .chatSelectBtn:hover,
+    .sendBtn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.42);
     }
 
-    .smallWhite:active {
-      transform: translateY(0);
-      box-shadow: 0 7px 16px rgba(37, 99, 235, 0.28);
+    .chatList {
+      display: grid;
+      gap: 10px;
     }
 
-    .smallWhite p {
+    .chatSelectBtn {
+      width: 100%;
+      padding: 14px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      color: #0f172a;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .chatSelectBtn span {
+      display: block;
+      margin-top: 4px;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    #chatScreen {
+      display: none;
+      height: min(90vh, 720px);
+      flex-direction: column;
+    }
+
+    .chatHeader {
+      padding: 16px 18px;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chatHeader h2 {
       margin: 0;
+      font-size: 20px;
+    }
+
+    .chatHeader p {
+      margin: 3px 0 0;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .backBtn {
+      border: none;
+      background: rgba(255, 255, 255, 0.18);
+      color: white;
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 18px;
+      overflow-y: auto;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 11px 13px;
+      border-radius: 16px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .message.other {
+      align-self: flex-start;
+      background: white;
+      border: 1px solid #e2e8f0;
+    }
+
+    .message.mine {
+      align-self: flex-end;
+      background: #4f46e5;
+      color: white;
+    }
+
+    .sendArea {
+      padding: 14px;
+      display: flex;
+      gap: 10px;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    #messageInput {
+      flex: 1;
+    }
+
+    .sendBtn {
+      padding: 0 18px;
+      background: #4f46e5;
+      color: white;
+      font-size: 15px;
+    }
+
+    @media (max-width: 520px) {
+      .inputRow,
+      .sendArea {
+        flex-direction: column;
+      }
+
+      .secondaryBtn,
+      .sendBtn {
+        padding: 14px;
+      }
+
+      .panel {
+        border-radius: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div id="mainMenu">
-    <h1>Super Chat</h1>
-    <p class="subtitle">Start a clean, simple chat session.</p>
+  <main class="app">
+    <div class="panel">
 
-    <button class="smallWhite">
-      <p>Start Chat 📝</p>
-    </button>
-  </div>
+      <section id="mainMenu">
+        <div class="topBar">
+          <h1>Super Chat</h1>
+          <p>Create or join a private chat room.</p>
+        </div>
+
+        <div class="content">
+          <div class="section">
+            <p class="sectionTitle">Create Chat</p>
+            <button id="makeChatBtn" class="primaryBtn">Make New Chat</button>
+          </div>
+
+          <div class="section">
+            <p class="sectionTitle">Join Chat</p>
+            <div class="inputRow">
+              <input id="chatIdInput" type="text" placeholder="Enter chat ID">
+              <button id="joinChatBtn" class="secondaryBtn">Join</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <p class="sectionTitle">Your Chats</p>
+
+            <div id="chatList" class="chatList">
+              <button class="chatSelectBtn">
+                Example Chat
+                <span>ID: ABC123</span>
+              </button>
+
+              <button class="chatSelectBtn">
+                Friends Room
+                <span>ID: XYZ789</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="chatScreen">
+        <div class="chatHeader">
+          <div>
+            <h2 id="chatNameDisplay">Example Chat</h2>
+            <p id="chatIdDisplay">Chat ID: ABC123</p>
+          </div>
+
+          <button id="backBtn" class="backBtn">Back</button>
+        </div>
+
+        <div id="messages" class="messages">
+          <div class="message other">Welcome to the chat.</div>
+          <div class="message mine">This is what your messages look like.</div>
+        </div>
+
+        <div class="sendArea">
+          <input id="messageInput" type="text" placeholder="Type a message...">
+          <button id="sendBtn" class="sendBtn">Send</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
 
   <script type="module">
   </script>
