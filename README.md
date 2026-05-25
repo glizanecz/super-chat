@@ -1,0 +1,1 @@
+This is a little experiment I'm doing. All GUI is handled by ChatGPT, all scripting (for the actual chat sending logic) will be written by me. This isn't end-to-end encrypted either, don't say weird stuff.
