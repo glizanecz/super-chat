@@ -4,34 +4,81 @@
   <title>Super Chat</title>
 
   <style>
-    .smallWhite {
-        font-size: medium;
-        border-radius: 10px;
-        background-color: whitesmoke;
-        border-color: grey;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        width: 40vw;
-        height: 20vh;
+    * {
+      box-sizing: border-box;
     }
 
-    .screen {
-        width: 90vw;
-        height: 90vh;
-        justify-items: center;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      font-family: Arial, sans-serif;
+    }
+
+    #mainMenu {
+      width: min(90vw, 420px);
+      padding: 28px;
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+      text-align: center;
+    }
+
+    #mainMenu h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 7vw, 42px);
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    .smallWhite {
+      width: 100%;
+      min-height: 58px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      font-size: clamp(17px, 4vw, 22px);
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .smallWhite:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.42);
+    }
+
+    .smallWhite:active {
+      transform: translateY(0);
+      box-shadow: 0 7px 16px rgba(37, 99, 235, 0.28);
+    }
+
+    .smallWhite p {
+      margin: 0;
     }
   </style>
 </head>
 
-<body class="screen">
+<body>
   <div id="mainMenu">
+    <h1>Super Chat</h1>
+    <p class="subtitle">Start a clean, simple chat session.</p>
+
     <button class="smallWhite">
-        <p>Start Chat 📝</p>
+      <p>Start Chat 📝</p>
     </button>
   </div>
 
-
   <script type="module">
   </script>
-
 </body>
 </html>
