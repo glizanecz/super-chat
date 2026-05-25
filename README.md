@@ -1,1 +1,1 @@
-this is all ai, im testing capibilities
+i give up
