@@ -365,10 +365,6 @@
               </button>
             </div>
           </div>
-
-          <div class="hintBox">
-            Your actual chat creation, saving, loading, and joining logic can be added later. These buttons currently open the chat screen.
-          </div>
         </div>
       </section>
 
@@ -446,6 +442,7 @@
   </main>
 
   <script type="module">
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const mainMenu = document.getElementById("mainMenu");
     const chatScreen = document.getElementById("chatScreen");
     const settingsScreen = document.getElementById("settingsScreen");
@@ -467,9 +464,6 @@
     const settingsChatName = document.getElementById("settingsChatName");
     const settingsChatId = document.getElementById("settingsChatId");
     const messages = document.getElementById("messages");
-
-    let currentChatName = "New Chat";
-    let currentChatId = "TEMP";
 
     function showScreen(screen) {
       mainMenu.classList.remove("active");
@@ -493,7 +487,9 @@
     }
 
     makeChatBtn.onclick = function() {
-      openChat("New Chat", "TEMP");
+      let currentChatName = "New Chat";
+      let currentChatId = String(Math.floor(Math.random() * 6000))
+      openChat("New Chat", currentChatId);
     }
 
     joinChatBtn.onclick = function() {
