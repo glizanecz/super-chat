@@ -96,13 +96,16 @@
       }
 
       onSnapshot(saveRef, (docSnap) => {
-        if (!docSnap) return
+        if (!docSnap.exists()) return
 
-        const data = docSnap.data;
+        const data = docSnap.data();
 
         if (data.lastMessage === latestChat) return
+        if (!data.lastMessage) return;
 
-        latestChat = data.lastMessage + " (Sent at " + data.lastChatDate + ")"
+        const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+
+        latestChat = data.lastMessage + " (Sent at " + sentAt + ")"
         chatLog.push(latestChat);
         chats.value = formatValues();
       })
