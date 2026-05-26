@@ -38,14 +38,14 @@
       const chats = document.getElementById("chats");
 
       sendMsgBtn.onclick = function() {
-        chats.value = newChatOrdered;
+        chats.value = formatValues;
         typeHere.value = "";
       }
 
       function formatValues() {
-        let chatArray = chat.split("\n")
+        let chatArray = typeHere.value.split("\n")
         let newChatOrdered = [];
-        for (let i = (chatArray - 1); i > 0; i--) {
+        for (let i = (chatArray.length - 1); i > 0; i--) {
           newChatOrdered.push(chatArray[i]);
         }
         return newChatOrdered;
