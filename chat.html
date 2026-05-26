@@ -36,9 +36,10 @@
       const sendMsgBtn = document.getElementById("sendMsgBtn");
       const typeHere = document.getElementById("typehere");
       const chats = document.getElementById("chats");
+      let username = "JoePlayz23"
 
       sendMsgBtn.onclick = function() {
-        chats.value = formatValues;
+        chats.value = username + ": " + formatValues();
         typeHere.value = "";
       }
 
