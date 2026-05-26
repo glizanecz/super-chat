@@ -46,7 +46,7 @@
       function formatValues() {
         let chatArray = typeHere.value.split("\n")
         let newChatOrdered = [];
-        for (let i = (chatArray.length - 1); i > 0; i--) {
+        for (let i = (chatArray.length - 1); i >= 0; i--) {
           newChatOrdered.push(chatArray[i]);
         }
         return newChatOrdered;
