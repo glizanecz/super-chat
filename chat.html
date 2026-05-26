@@ -37,13 +37,17 @@
         </div>
     </main>
     <script type="module">
-      import { initializeApp } from "firebase/app/";
-      import { getAnalytics } from "firebase/analytics/";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
 
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        onSnapshot,
+        serverTimestamp
+      } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
       const firebaseConfig = {
         apiKey: "AIzaSyCSUeplNuF3klbleAVc5jhYZz9XfYLqe6Y",
         authDomain: "super-chat-c83b0.firebaseapp.com",
@@ -54,15 +58,6 @@
         measurementId: "G-C360M28XHZ"
       };
 
-      import {
-        getDoc,
-        updateDoc,
-        setDoc,
-        onSnapshot,
-        serverTimestamp,
-        getFirestore,
-        doc,
-      } from "firebase/firestore/"; 
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -101,11 +96,15 @@
       }
 
       onSnapshot(saveRef, (docSnap) => {
-        if (!docSnap || docSnap.lastMessage === latestChat) return
+        if (!docSnap) return
 
-        latestChat = docSnap.lastMessage + " (Sent at " + docSnap.lastChatDate + ")"
+        const data = docSnap.data;
+
+        if (data.lastMessage === latestChat) return
+
+        latestChat = data.lastMessage + " (Sent at " + data.lastChatDate + ")"
         chatLog.push(latestChat);
-        chat.value = formatValues();
+        chats.value = formatValues();
       })
     </script>
   </body>
