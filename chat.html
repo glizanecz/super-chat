@@ -27,14 +27,20 @@
             <h3>Chat Log:</h3>  
             <textarea readonly id="chats" placeholder="The conversation starts here..."></textarea>
             <h3>Type Area:</h3>  
-            <textarea id="typehere" placeholder="Type your message here..."></textarea>
+            <textarea id="typehere" placeholder="Type your message here..."></textarea><h2 style="float: right">⚙️</h2>
+            <br>
             <button id="sendMsgBtn">Send Message</button>
         </div>
     </main>
     <script type="module">
       const sendMsgBtn = document.getElementById("sendMsgBtn");
       const typeHere = document.getElementById("typehere");
-      const chats = document.getElementById("chats")
+      const chats = document.getElementById("chats");
+
+      sendMsgBtn.onclick = function() {
+        chats.innerText += typeHere.input + "\n";
+        typeHere.input = "";
+      }
     </script>
   </body>
 </html>
