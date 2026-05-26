@@ -37,8 +37,8 @@
         </div>
     </main>
     <script type="module">
-      import { initializeApp } from "firebase/app";
-      import { getAnalytics } from "firebase/analytics";
+      import { initializeApp } from "firebase/app/";
+      import { getAnalytics } from "firebase/analytics/";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -62,7 +62,7 @@
         serverTimestamp,
         getFirestore,
         doc,
-      } from "firebase/firestore"; 
+      } from "firebase/firestore/"; 
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -101,7 +101,7 @@
       }
 
       onSnapshot(saveRef, (docSnap) => {
-        if (!docSnap) return
+        if (!docSnap || docSnap.lastMessage === latestChat) return
 
         latestChat = docSnap.lastMessage + " (Sent at " + docSnap.lastChatDate + ")"
         chatLog.push(latestChat);
