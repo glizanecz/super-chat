@@ -39,12 +39,13 @@
       let username = "JoePlayz23"
 
       sendMsgBtn.onclick = function() {
-        chats.value += username + ": " + formatValues();
+        chats.value += username + ": " + typeHere.value;
+        chats.value = formatValues();
         typeHere.value = "";
       }
 
       function formatValues() {
-        let chatArray = typeHere.value.split("\n")
+        let chatArray = chats.value.split("\n")
         let newChatOrdered = [];
         for (let i = (chatArray.length - 1); i >= 0; i--) {
           newChatOrdered.push(chatArray[i]);
