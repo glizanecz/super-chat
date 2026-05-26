@@ -37,16 +37,59 @@
         </div>
     </main>
     <script type="module">
+      import { initializeApp } from "firebase/app";
+      import { getAnalytics } from "firebase/analytics";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCSUeplNuF3klbleAVc5jhYZz9XfYLqe6Y",
+        authDomain: "super-chat-c83b0.firebaseapp.com",
+        projectId: "super-chat-c83b0",
+        storageBucket: "super-chat-c83b0.firebasestorage.app",
+        messagingSenderId: "849823772763",
+        appId: "1:849823772763:web:679ef60cdd931473604f7e",
+        measurementId: "G-C360M28XHZ"
+      };
+
+      import {
+        getDoc,
+        updateDoc,
+        setDoc,
+        onSnapshot,
+        serverTimestamp,
+        getFirestore,
+        doc,
+      } from "firebase/firestore"; 
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const analytics = getAnalytics(app);
       const sendMsgBtn = document.getElementById("sendMsgBtn");
       const typeHere = document.getElementById("typehere");
       const chats = document.getElementById("chats");
+      const saveRef = doc(db, "messages")
+      let latestChat = "";
       let chatLog = [];
       let username = "JoePlayz23"
 
-      sendMsgBtn.onclick = function() {
+      sendMsgBtn.onclick = async function() {
         chatLog.push(username + ": " + typeHere.value);
+        latestChat = username + ": " + typeHere.value;
+        await uploadToServer(latestChat);
         chats.value = formatValues();
         typeHere.value = "";
+      }
+
+      async function uploadToServer() {
+        await setDoc(saveRef, {
+          lastUsername: username,
+          lastChatDate: serverTimestamp(),
+          lastMessage: latestChat,
+        })
       }
 
       function formatValues() {
@@ -56,6 +99,14 @@
         }
         return newChatOrdered.join("\n");
       }
+
+      onSnapshot(saveRef, (docSnap) => {
+        if (!docSnap) return
+
+        latestChat = docSnap.lastMessage + " (Sent at " + docSnap.lastChatDate + ")"
+        chatLog.push(latestChat);
+        chat.value = formatValues();
+      })
     </script>
   </body>
 </html>
