@@ -36,19 +36,19 @@
       const sendMsgBtn = document.getElementById("sendMsgBtn");
       const typeHere = document.getElementById("typehere");
       const chats = document.getElementById("chats");
+      let chatLog = [];
       let username = "JoePlayz23"
 
       sendMsgBtn.onclick = function() {
-        chats.value += username + ": " + typeHere.value;
+        chatLog.push(username + ": " + typeHere.value);
         chats.value = formatValues();
         typeHere.value = "";
       }
 
       function formatValues() {
-        let chatArray = chats.value.split("\n")
         let newChatOrdered = [];
-        for (let i = (chatArray.length - 1); i >= 0; i--) {
-          newChatOrdered.push(chatArray[i]);
+        for (let i = (chatLog.length - 1); i >= 0; i--) {
+          newChatOrdered.push(chatLog[i]);
         }
         return newChatOrdered.join("\n");
       }
