@@ -38,8 +38,8 @@
       const chats = document.getElementById("chats");
 
       sendMsgBtn.onclick = function() {
-        chats.innerText += typeHere.input + "\n";
-        typeHere.input = "";
+        chats.value += typeHere.value + "\n";
+        typeHere.value = "";
       }
     </script>
   </body>
