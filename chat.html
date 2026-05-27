@@ -199,22 +199,27 @@
           if (blockedMsgCount === 1) {
             chatLog.push(username + ": *this chat was blocked*");
             latestChat = username + ": *this chat was blocked*";
-            await uploadToServer(latestChat);
-            chats.value = formatValues();
-            typeHere.value = "";
           } else {
             chatLog.push(username + ": *this chat was blocked x" + blockedMsgCount + "*");
             latestChat = username + ": *this chat was blocked x" + blockedMsgCount + "*";
+          }
+          try {
             await uploadToServer(latestChat);
             chats.value = formatValues();
             typeHere.value = "";
+          } catch (error) {
+            console.log("Something went wrong with uploading message to server, try again later...");
           }
           return;
         }
         blockedMsgCount = 0;
         chatLog.push(username + ": " + typeHere.value);
         latestChat = username + ": " + typeHere.value;
-        await uploadToServer(latestChat);
+        try {
+          await uploadToServer(latestChat);
+        } catch (error) {
+          console.log("Something went wrong with uploading message to server, try again later...");
+        }
         chats.value = formatValues();
         typeHere.value = "";
       }
@@ -263,14 +268,17 @@
             ${JSON.stringify(text)}
         `;
 
-        const result = await model.generateContent(prompt);
-        const answer = result.response.text().trim().toUpperCase();
+        try {
+          const result = await model.generateContent(prompt);
+          const answer = result.response.text().trim().toUpperCase();
+          if (answer.startsWith("YES")) {
+            return "YES";
+          }
 
-        if (answer.startsWith("YES")) {
-          return "YES";
+          return "NO";
+        } catch (error) {
+          console.log("Something went wrong with our moderation checker, try again later...")
         }
-
-        return "NO";
       }
     </script>
   </body>
