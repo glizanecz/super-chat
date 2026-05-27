@@ -326,11 +326,21 @@
 
       sendMsgBtn.onclick = async function() {
         if (cooltimeOver === 1 && typeHere.value != "") {
+          let sentAt;
+          try {
+            const data = await getDoc(saveRef);
+            sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+          } catch (error) {
+            console.error(error);
+            errorMsgBox.style.display = "block";
+            errorMsgBox.innerText = "Something went wrong with fetching data from the server, try again later..." + "\n" + "No, refreshing WON'T help."
+            sentAt = "?";
+          }
           let normalizedMessage = typeHere.value.toLowerCase().replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z");
           let normalizedMessageNoSpace = typeHere.value.toLowerCase().replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/\s/g, "");
           if (blockedWords.includes(normalizedMessage) || blockedWords.includes(normalizedMessageNoSpace)) {
             blockedMsgCount += 1;
-            chatLog.push("You: *this chat was blocked*");
+            chatLog.push(sentAt + " | You: *this chat was blocked*");
             latestChat = username + ": *this chat was blocked*";
             try {
               await uploadToServer(latestChat);
@@ -367,7 +377,7 @@
             return;
           } */
           blockedMsgCount = 0;
-          chatLog.push("You: " + typeHere.value);
+          chatLog.push(sentAt + " | You: " + typeHere.value);
           latestChat = username + ": " + typeHere.value;
           try {
             chats.value = formatValues();
