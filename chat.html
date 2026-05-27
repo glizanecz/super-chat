@@ -238,9 +238,6 @@
         if (!data.lastMessage) return;
 
         const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
-        if (sentAt && Date.now() - sentAt.getTime() > 15 * 60 * 1000) {
-          return;
-        }
 
         latestChat = data.lastMessage + " (Sent at " + sentAt + ")"
         chatLog.push(latestChat);
