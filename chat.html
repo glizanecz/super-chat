@@ -48,6 +48,20 @@
         serverTimestamp
       } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+      import {
+        getAI,
+        getGenerativeModel,
+        GoogleAIBackend
+      } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-ai.js";
+
+      const ai = getAI(app, {
+        backend: new GoogleAIBackend()
+      });
+
+      const model = getGenerativeModel(ai, {
+        model: "gemini-2.5-flash"
+      });
+
       const firebaseConfig = {
         apiKey: "AIzaSyCSUeplNuF3klbleAVc5jhYZz9XfYLqe6Y",
         authDomain: "super-chat-c83b0.firebaseapp.com",
@@ -177,8 +191,21 @@
       let latestChat = "";
       let chatLog = [];
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
+      let blockedMsgCount = 0;
 
       sendMsgBtn.onclick = async function() {
+        if (await checkProfanityAI(typeHere.value) === "NO") {
+          blockedMsgCount += 1;
+          if (blockedMsgCount === 1) {
+            chatLog.push(username + ": *this chat was blocked*");
+            latestChat = username + ": *this chat was blocked*";
+          } else {
+            chatLog.push(username + ": *this chat was blocked x" + blockedMsgCount + "*");
+            latestChat = username + ": *this chat was blocked x" + blockedMsgCount + "*";
+          }
+          return;
+        }
+        blockedMsgCount = 0;
         chatLog.push(username + ": " + typeHere.value);
         latestChat = username + ": " + typeHere.value;
         await uploadToServer(latestChat);
@@ -211,11 +238,37 @@
         if (!data.lastMessage) return;
 
         const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+        if (sentAt && Date.now() - sentAt.getTime() > 15 * 60 * 1000) {
+          return;
+        }
 
         latestChat = data.lastMessage + " (Sent at " + sentAt + ")"
         chatLog.push(latestChat);
         chats.value = formatValues();
       })
+
+      async function checkProfanityAI(text) {
+        const prompt = `
+            You are a profanity checker.
+
+            Answer ONLY YES or NO.
+
+            YES = the text is clean and allowed.
+            NO = the text has profanity, slurs, threats, sexual content, harassment, or abusive insults.
+
+            Text:
+            ${JSON.stringify(text)}
+        `;
+
+        const result = await model.generateContent(prompt);
+        const answer = result.response.text().trim().toUpperCase();
+
+        if (answer.startsWith("YES")) {
+          return "YES";
+        }
+
+        return "NO";
+      }
     </script>
   </body>
 </html>
