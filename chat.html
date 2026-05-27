@@ -66,7 +66,8 @@
         doc,
         setDoc,
         onSnapshot,
-        serverTimestamp
+        serverTimestamp,
+        getDoc,
       } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
       import {
@@ -434,7 +435,7 @@
       async function startCoolDown() {
         const snapshotOfSettings = await getDoc(settingsRef)
         if (snapshotOfSettings.exists()) {
-          const data = docSnap.data();
+          const data = snapshotOfSettings.data();
           cooldown = data.cooldown;
         } else {
           cooldown = 3000;
