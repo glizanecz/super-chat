@@ -413,7 +413,7 @@
         const serverTimeNumber = data.lastChatDate.toDate().getTime();
         serverTimeOffset = serverTimeNumber - Date.now();
 
-        const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+        const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString : "pending";
 
         latestChat = sentAt + " | " + data.lastMessage;
         chatLog.push(latestChat);
