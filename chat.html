@@ -247,7 +247,6 @@
         "cunt",
         "jackoff",
         "masturbate",
-        "edge",
         "goon",
         "jerking",
         "yanking",
@@ -646,6 +645,7 @@
             blockedMsgCount += 1;
             chatLog.push(sentAt + " | You: *this chat was blocked*");
             latestChat = username + ": *this chat was blocked*";
+            msgBlockRsn.innerText = "Your message was blocked because of: " + typeHere.value
             try {
               await uploadToServer(latestChat);
               chats.value = formatValues();
