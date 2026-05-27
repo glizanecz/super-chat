@@ -533,7 +533,7 @@
           let normalizedMessageNoAnything = input.replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯèéêëēĕėęěȅȇȩɇɛÈÉÊËĒĔĖĘĚȄȆȨɆƐìíîïĩīĭįıǐȉȋɨÌÍÎÏĨĪĬĮİǏȈȊƗòóôõöøōŏőǒǫǭǿȍȏɔÒÓÔÕÖØŌŎŐǑǪǬǾȌȎƆùúûüũūŭůűųǔǖǘǚǜʉÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄýÿŷȳẏƴʏÝŸŶȲẎƳçćĉċč¢ÇĆĈĊČďđðĎĐÐĝğġģḡĜĞĠĢḠĥħĤĦĺļľłĹĻĽŁñńņňŉŋÑŃŅŇŊŕŗřŔŖŘśŝşšșßŚŜŞŠȘţťŧțŢŤŦȚźżžŹŻŽ]/g, "").toLowerCase().replace(/[1234567890!@#$%^&*(),.<>/?'"|\\{}[]=+-]/g, "")
           let oneNormalized = normalizedMessage.replace(/(.)\1+/g, "$1");
           let twoNormalized = normalizedMessageNoSpace.replace(/(.)\1+/g, "$1");
-          let threeNormalized = normalizedMessageSpecialChar.replace(/(.)\1+/g, "$1");
+          let threeNormalized = normalizedMessageNoSpecialChar.replace(/(.)\1+/g, "$1");
           let fourNormalized = normalizedMessageNoAnything.replace(/(.)\1+/g, "$1");
           const hasBlockedWord = blockedWords.some(word => 
             normalizedMessage.includes(word)
