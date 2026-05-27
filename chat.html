@@ -892,13 +892,13 @@
 
       async function banUserFor(time) {
         lockedUser = 1;
-        let banTimer = time / 1000;
-        for (let i = 0; i <= banTimer; i++) {
-          let totalSeconds = Math.floor(time / 1000);
+        let totalSeconds = Math.floor(time / 1000);
+        for (let i = 0; i <= totalSeconds; i++) {
           let minutes = Math.floor(totalSeconds / 60);
           let seconds = totalSeconds % 60;
-          errorMsgBox.innerText = "You've been banned for :" + String(seconds).padStart(2, "0") + "..." + "\n" + "No, refreshing WON'T help."
+          errorMsgBox.innerText = "You've been banned for :" + minutes + ":" + String(seconds).padStart(2, "0") + "..." + "\n" + "No, refreshing WON'T help."
           await sleep(1000);
+          totalSeconds -= 1;
         }
         lockedUser = 0;
         errorMsgBox.style.display = "block";
