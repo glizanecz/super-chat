@@ -409,7 +409,7 @@
 
         const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
 
-        latestChat = data.lastMessage + " (Sent at " + sentAt + ")"
+        latestChat = sentAt + " | " + data.lastMessage;
         chatLog.push(latestChat);
         chats.value = formatValues();
       })
