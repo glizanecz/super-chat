@@ -334,6 +334,7 @@
               cooltimeOver = 0;
               await startCoolDown();
             } catch (error) {
+              console.error(error);
               console.log("Something went wrong with uploading message to server, try again later...");
               await sleep(cooldown)
               return;
@@ -367,6 +368,7 @@
             cooltimeOver = 0;
             await startCoolDown();
           } catch (error) {
+            console.error(error);
             console.log("Something went wrong with uploading message to server, try again later...");
             await sleep(cooldown)
           }
