@@ -36,6 +36,7 @@
           font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
           padding: 20px;
           width: fit-content;
+          display: none;
         }
     </style>
   </head>
@@ -457,6 +458,14 @@
         sendMsgBtn.innerText = "Send Message";
         cooltimeOver = 1;
       }
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "a") {
+          console.log("Something went wrong with our moderation checker, try again later...")
+          errorMsgBox.style.display = "block";
+          errorMsgBox.innerText = "Something went wrong with our moderation checker, try again later..." + "\n" + "No, refreshing WON'T help."
+        }
+      })
     </script>
   </body>
 </html>
