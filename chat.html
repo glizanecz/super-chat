@@ -892,8 +892,9 @@
 
       async function banUserFor(time) {
         lockedUser = 1;
+        let banTime = Math.floor(time / 1000);
         let totalSeconds = Math.floor(time / 1000);
-        for (let i = 0; i <= totalSeconds; i++) {
+        for (let i = 0; i <= banTime; i++) {
           let minutes = Math.floor(totalSeconds / 60);
           let seconds = totalSeconds % 60;
           errorMsgBox.innerText = "You've been banned for: " + minutes + ":" + String(seconds).padStart(2, "0") + "..." + "\n" + "No, refreshing WON'T help."
@@ -904,6 +905,8 @@
         errorMsgBox.style.display = "block";
         errorMsgBox.innerText = "𝘽𝙖𝙣 𝙡𝙞𝙛𝙩𝙚𝙙..."
         errorMsgBox.style.backgroundColor = "cornflowerblue"
+        await sleep(5000);
+        errorMsgBox.style.display = "red";
       }
     </script>
   </body>
