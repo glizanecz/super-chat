@@ -19,6 +19,18 @@
             /* I meant padding */ 
         }
 
+        .rules {
+            background-color: cornflowerblue;
+            border-radius: 20px;
+            border: 2px solid rgb(20, 87, 138);
+            display: grid;
+            place-items: center;
+            resize: vertical;
+            padding: 10px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+            /* I meant padding */ 
+        }
+
         .welcome {
           text-decoration: underline double;
         }
@@ -48,12 +60,24 @@
               <h4>No, refreshing WON'T help.</h4>
             </div>
             <h2 class="welcome">Welcome to Super Chat</h2>
+            <h5 href="#rules">Community Rules</h5>
             <h3>Chat Log:</h3>  
             <textarea class="textarea" readonly id="chats" placeholder="The conversation starts here..."></textarea>
             <h3>Type Area:</h3>
             <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
             <br>
             <button id="sendMsgBtn">Send Message</button> <button id="settBtn">⚙️</button>
+            <br>
+            <br>
+            <div class="rules" id="rules">
+              <ul>
+                <li>No racism, homophobia, transphobia, or other discrimination of any kind</li>
+                <li>No slurs/swears</li>
+                <li>Use appropriate language for kids 14+</li>
+                <li>No refrences to adult content</li>
+                <li>50 or more blocked chats will result in a ban</li>
+              </ul>
+            </div>
         </div>
     </main>
     <script type="module">
