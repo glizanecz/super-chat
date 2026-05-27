@@ -188,12 +188,124 @@
         "Gladiator"
       ];
 
+      //BLOCKED WORDS FOR CHAT, GITHUB I AM NOT SPREADING HATE
+      const blockedWords = [
+        // fuck
+        "fuck",
+        "fucks",
+        "fucked",
+        "fucker",
+        "fuckers",
+        "fucking",
+        "fk",
+        "fck",
+
+        // shit
+        "shit",
+        "shits",
+        "shitty",
+        "shitting",
+
+        // bitch
+        "bitch",
+        "bitches",
+        "bitchy",
+
+        // asshole
+        "asshole",
+        "assholes",
+
+        // bastard
+        "bastard",
+        "bastards",
+
+        // dick
+        "dick",
+        "dicks",
+        "dickhead",
+
+        // piss
+        "piss",
+        "pissed",
+
+        // slut
+        "slut",
+        "sluts",
+
+        // whore
+        "whore",
+        "whores",
+
+        // n-word
+        "nigger",
+        "niggers",
+        "nigga",
+        "niggas",
+
+        // homophobic slurs
+        "fag",
+        "fags",
+        "faggot",
+        "faggots",
+
+        // ableist
+        "retard",
+        "retarded",
+
+        // transphobic
+        "tranny",
+        "trannies",
+        "crossdresser",
+        "tran",
+
+        // antisemitic
+        "kike",
+        "kikes",
+
+        // racist slurs
+        "chink",
+        "chinks",
+        "spic",
+        "spics",
+
+        //xenophobic towards immigrants
+        "illegal aliens",
+        "poisoning the blood of our country",
+
+
+        //inapropriate lingo
+        "boob",
+        "boobs",
+        "penis",
+        "penises",
+        "peni",
+        "tits",
+        "tit",
+        "clit",
+        "clitoris",
+        "clits",
+        "bbl",
+        "dih",
+        "puh",
+      ];
+
       let latestChat = "";
       let chatLog = [];
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
       let blockedMsgCount = 0;
 
       sendMsgBtn.onclick = async function() {
+        let normalizedMessage = typeHere.value.toLowerCase().replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z");
+        if (blockedWords.includes(normalizedMessage)) {
+          blockedMsgCount += 1;
+          chatLog.push(username + ": *this chat was blocked*");
+          latestChat = username + ": *this chat was blocked*";
+          await uploadToServer(latestChat);
+          chats.value = formatValues();
+          typeHere.value = "";
+          return;
+        }
+        /*
         if (await checkProfanityAI(typeHere.value) === "NO") {
           blockedMsgCount += 1;
           if (blockedMsgCount === 1) {
@@ -211,7 +323,7 @@
             console.log("Something went wrong with uploading message to server, try again later...");
           }
           return;
-        }
+        } */
         blockedMsgCount = 0;
         chatLog.push(username + ": " + typeHere.value);
         latestChat = username + ": " + typeHere.value;
