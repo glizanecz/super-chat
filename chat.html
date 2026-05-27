@@ -316,6 +316,7 @@
 
       let cooldown = 3000;
       let cooltimeOver = 1;
+      let cooldownUser = 1;
       let latestChat = "";
       let chatLog = [];
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
@@ -338,8 +339,9 @@
               await startCoolDown();
             } catch (error) {
               console.error(error);
-              console.log("Something went wrong with uploading message to server, try again later...");
-              await sleep(cooldown)
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
+              await startCoolDown();
               return;
             }
           }
@@ -372,8 +374,9 @@
             await startCoolDown();
           } catch (error) {
             console.error(error);
-            console.log("Something went wrong with uploading message to server, try again later...");
-            await sleep(cooldown)
+            errorMsgBox.style.display = "block";
+            errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
+            await startCoolDown();
           }
         }
       }
@@ -431,20 +434,26 @@
 
           return "NO";
         } catch (error) {
-          console.log("Something went wrong with our moderation checker, try again later...")
           errorMsgBox.style.display = "block";
           errorMsgBox.innerText = "Something went wrong with our moderation checker, try again later..." + "\n" + "No, refreshing WON'T help."
+          await sleep(cooldown)
         }
       }
 
       async function startCoolDown() {
         typeHere.value = "";
-        const snapshotOfSettings = await getDoc(settingsRef)
-        if (snapshotOfSettings.exists()) {
-          const data = snapshotOfSettings.data();
-          cooldown = data.cooldown;
-        } else {
-          cooldown = 3000;
+        try {
+          const snapshotOfSettings = await getDoc(settingsRef)
+          if (snapshotOfSettings.exists()) {
+            const data = snapshotOfSettings.data();
+            cooldown = data.cooldown;
+          } else {
+            cooldown = 3000;
+          }
+        } catch (error) {
+          console.error(error);
+          errorMsgBox.style.display = "block";
+          errorMsgBox.innerText = "Something went wrong with fetching data from the server, try again later..." + "\n" + "No, refreshing WON'T help."
         }
         let coolDownTime = cooldown / 1000;
         sendMsgBtn.style.opacity = ".5";
@@ -460,10 +469,18 @@
       }
 
       window.addEventListener("keydown", (event) => {
-        if (event.key === "a") {
-          console.log("Something went wrong with our moderation checker, try again later...")
-          errorMsgBox.style.display = "block";
-          errorMsgBox.innerText = "Something went wrong with our moderation checker, try again later..." + "\n" + "No, refreshing WON'T help."
+        if ((event.key === "s" || event.key === "S") && cooldownUser === 1) {
+          let answer = prompt("What do you want as your username?")
+          let normalizedMessage = answer.toLowerCase().replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z");
+          let normalizedMessageNoSpace = answer.toLowerCase().replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/\s/g, "");
+          if (blockedWords.includes(normalizedMessage) || blockedWords.includes(normalizedMessageNoSpace)) {
+            alert("Username is profane and invalid!")
+          } else if (answer.length > 12) {
+            alert("Username can't be over 12 characters!")
+          } else {
+            username = answer.replace(/\s/g, "");
+            alert("Username set!")
+          }
         }
       })
     </script>
