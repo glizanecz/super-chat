@@ -54,14 +54,6 @@
         GoogleAIBackend
       } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-ai.js";
 
-      const ai = getAI(app, {
-        backend: new GoogleAIBackend()
-      });
-
-      const model = getGenerativeModel(ai, {
-        model: "gemini-2.5-flash"
-      });
-
       const firebaseConfig = {
         apiKey: "AIzaSyCSUeplNuF3klbleAVc5jhYZz9XfYLqe6Y",
         authDomain: "super-chat-c83b0.firebaseapp.com",
@@ -81,6 +73,14 @@
       const typeHere = document.getElementById("typehere");
       const chats = document.getElementById("chats");
       const saveRef = doc(db, "chats", "messages")
+
+      const ai = getAI(app, {
+        backend: new GoogleAIBackend()
+      });
+
+      const model = getGenerativeModel(ai, {
+        model: "gemini-2.5-flash"
+      });
 
       const adjectives = [
         "Swift",
