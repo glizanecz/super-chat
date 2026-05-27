@@ -432,13 +432,13 @@
       }
 
       async function startCoolDown() {
-        await getDoc(settingsRef, (docSnap) => {
-          if (!docSnap.exists()) return;
-
+        const snapshotOfSettings = await getDoc(settingsRef)
+        if (snapshotOfSettings.exists()) {
           const data = docSnap.data();
-
           cooldown = data.cooldown;
-        })
+        } else {
+          cooldown = 3000;
+        }
         let coolDownTime = cooldown / 1000;
         sendMsgBtn.style.opacity = ".5";
         sendMsgBtn.innerText = "On Cooldown: " + coolDownTime + "s";
@@ -447,6 +447,8 @@
           sendMsgBtn.innerText = "On Cooldown " + (coolDownTime - i) + "s";
           await sleep(1000)
         }
+        sendMsgBtn.style.opacity = "1";
+        sendMsgBtn.innerText = "Send Message";
         cooltimeOver = 1;
       }
     </script>
