@@ -896,7 +896,7 @@
         for (let i = 0; i <= totalSeconds; i++) {
           let minutes = Math.floor(totalSeconds / 60);
           let seconds = totalSeconds % 60;
-          errorMsgBox.innerText = "You've been banned for :" + minutes + ":" + String(seconds).padStart(2, "0") + "..." + "\n" + "No, refreshing WON'T help."
+          errorMsgBox.innerText = "You've been banned for : " + minutes + ":" + String(seconds).padStart(2, "0") + "..." + "\n" + "No, refreshing WON'T help."
           await sleep(1000);
           totalSeconds -= 1;
         }
