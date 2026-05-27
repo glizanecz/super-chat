@@ -439,7 +439,14 @@
 
           cooldown = data.cooldown;
         })
-        await sleep(cooldown);
+        let coolDownTime = cooldown / 1000;
+        sendMsgBtn.style.opacity = ".5";
+        sendMsgBtn.innerText = "On Cooldown: " + coolDownTime + "s";
+        await sleep(1000)
+        for (let i = 1; i < coolDownTime; i++) {
+          sendMsgBtn.innerText = "On Cooldown " + (coolDownTime - i) + "s";
+          await sleep(1000)
+        }
         cooltimeOver = 1;
       }
     </script>
