@@ -47,10 +47,10 @@
               <h4>Error: Blah Blah</h4>
               <h4>No, refreshing WON'T help.</h4>
             </div>
-            <h2 class="welcome">Welcome to Super Chat</h2> <h4 onclick="settingsBtn()">⚙️</h4>
+            <h2 class="welcome">Welcome to Super Chat</h2>
             <h3>Chat Log:</h3>  
             <textarea class="textarea" readonly id="chats" placeholder="The conversation starts here..."></textarea>
-            <h3>Type Area:</h3>
+            <h3>Type Area:</h3><h4 onclick="settingsBtn()">⚙️</h4>
             <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
             <br>
             <button id="sendMsgBtn">Send Message</button>
@@ -369,6 +369,7 @@
           chatLog.push(username + ": " + typeHere.value);
           latestChat = username + ": " + typeHere.value;
           try {
+            chats.value = formatValues();
             await uploadToServer(latestChat);
             cooltimeOver = 0;
             await startCoolDown();
