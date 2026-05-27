@@ -654,6 +654,7 @@
       let cooldown = 3000;
       let cooltimeOver = 1;
       let cooldownUser = 1;
+      let lockedUser = 0;
       let latestChat = "";
       let chatLog = [];
       let serverTimeOffset;
@@ -663,11 +664,32 @@
       const settBtn = document.getElementById("settBtn");
 
       sendMsgBtn.onclick = async function() {
-        if (cooltimeOver === 1 && typeHere.value != "") {
+        if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
           if (isTextProfane(typeHere.value) === true) {
             blockedMsgCount += 1;
+            if (blockedMsgCount === 2) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been banned for 1 minute..." + "\n" + "No, refreshing WON'T help."
+              banUserFor(60_000)
+              return;
+            } else if (blockedMsgCount === 10) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been banned for 10 minutes" + "\n" + "No, refreshing WON'T help."
+              banUserFor(600_000)
+              return;
+            } else if (blockedMsgCount === 25) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been banned for 25 minutes" + "\n" + "No, refreshing WON'T help."
+              banUserFor(1_500_000)
+              return;
+            } else if (blockedMsgCount === 50) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been hit with the ban hammer!" + "\n" + "No, refreshing WON'T help."
+              lockedUser = 1;
+              return;
+            }
             chatLog.push(sentAt + " | You: *this chat was blocked*");
             latestChat = username + ": *this chat was blocked*";
             try {
@@ -702,7 +724,6 @@
             }
             return;
           } */
-          blockedMsgCount = 0;
           chatLog.push(sentAt + " | You: " + typeHere.value);
           latestChat = username + ": " + typeHere.value;
           try {
@@ -867,6 +888,15 @@
           }
           
           return false
+      }
+
+      async function banUserFor(time) {
+        lockedUser = 1;
+        await sleep(time);
+        lockedUser = 0;
+        errorMsgBox.style.display = "block";
+        errorMsgBox.innerText = "𝘽𝙖𝙣 𝙡𝙞𝙛𝙩𝙚𝙙..."
+        errorMsgBox.style.backgroundColor = "lightblue"
       }
     </script>
   </body>
