@@ -291,7 +291,6 @@
         "tranny",
         "trannies",
         "crossdresser",
-        "tran",
 
         // antisemitic
         "kike",
@@ -316,7 +315,6 @@
         "penises",
         "peni",
         "tits",
-        "tit",
         "clit",
         "clitoris",
         "clits",
@@ -338,8 +336,6 @@
         "arse",
         "asshol",
         "asshola",
-        "arso",
-        "",
 
         //Historical events
         "hitler",
@@ -375,6 +371,15 @@
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
           let normalizedMessage = typeHere.value.replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a") .replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "a") .replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e") .replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "e") .replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i") .replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "i") .replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o") .replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "o") .replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u") .replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "u") .replace(/[ýÿŷȳẏƴʏ]/g, "y") .replace(/[ÝŸŶȲẎƳ]/g, "y") .replace(/[çćĉċč¢ɔ]/g, "c") .replace(/[ÇĆĈĊČ¢Ɔ]/g, "c") .replace(/[ďđđð]/g, "d") .replace(/[ĎĐĐÐ]/g, "d") .replace(/[ĝğġģḡ]/g, "g") .replace(/[ĜĞĠĢḠ]/g, "g") .replace(/[ĥħ]/g, "h") .replace(/[ĤĦ]/g, "h") .replace(/[ĺļľłł]/g, "l") .replace(/[ĹĻĽŁŁ]/g, "l") .replace(/[ñńņňŉŋ]/g, "n") .replace(/[ÑŃŅŇŊ]/g, "n") .replace(/[ŕŗř]/g, "r") .replace(/[ŔŖŘ]/g, "r") .replace(/[śŝşšșß]/g, "s") .replace(/[ŚŜŞŠȘ]/g, "s") .replace(/[ţťŧț]/g, "t") .replace(/[ŢŤŦȚ]/g, "t") .replace(/[źżžž]/g, "z") .replace(/[ŹŻŽŽ]/g, "z").toLowerCase();
           let normalizedMessageNoSpace = typeHere.value.replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/\s/g, "").replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a") .replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "a") .replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e") .replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "e") .replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i") .replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "i") .replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o") .replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "o") .replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u") .replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "u") .replace(/[ýÿŷȳẏƴʏ]/g, "y") .replace(/[ÝŸŶȲẎƳ]/g, "y") .replace(/[çćĉċč¢ɔ]/g, "c") .replace(/[ÇĆĈĊČ¢Ɔ]/g, "c") .replace(/[ďđđð]/g, "d") .replace(/[ĎĐĐÐ]/g, "d") .replace(/[ĝğġģḡ]/g, "g") .replace(/[ĜĞĠĢḠ]/g, "g") .replace(/[ĥħ]/g, "h") .replace(/[ĤĦ]/g, "h") .replace(/[ĺļľłł]/g, "l") .replace(/[ĹĻĽŁŁ]/g, "l") .replace(/[ñńņňŉŋ]/g, "n") .replace(/[ÑŃŅŇŊ]/g, "n") .replace(/[ŕŗř]/g, "r") .replace(/[ŔŖŘ]/g, "r") .replace(/[śŝşšșß]/g, "s") .replace(/[ŚŜŞŠȘ]/g, "s") .replace(/[ţťŧț]/g, "t") .replace(/[ŢŤŦȚ]/g, "t") .replace(/[źżžž]/g, "z") .replace(/[ŹŻŽŽ]/g, "z").toLowerCase();
+          const matchedWord = blockedWords.find(word =>
+            normalizedMessage.includes(word) || normalizedMessageNoSpace.includes(word)
+          );
+
+          console.log("message:", typeHere.value);
+          console.log("normalized:", normalizedMessage);
+          console.log("normalized no space:", normalizedMessageNoSpace);
+          console.log("matched blocked word:", matchedWord);
+          
           const hasBlockedWord = blockedWords.some(word => 
             normalizedMessage.includes(word)
           );
