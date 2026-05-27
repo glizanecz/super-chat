@@ -31,7 +31,7 @@
             <h3>Chat Log:</h3>  
             <textarea readonly id="chats" placeholder="The conversation starts here..."></textarea>
             <h3>Type Area:</h3>
-            <textarea max="300" id="typehere" placeholder="Type your message here..."></textarea>
+            <textarea maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
             <br>
             <button id="sendMsgBtn">Send Message</button>
         </div>
@@ -199,9 +199,15 @@
           if (blockedMsgCount === 1) {
             chatLog.push(username + ": *this chat was blocked*");
             latestChat = username + ": *this chat was blocked*";
+            await uploadToServer(latestChat);
+            chats.value = formatValues();
+            typeHere.value = "";
           } else {
             chatLog.push(username + ": *this chat was blocked x" + blockedMsgCount + "*");
             latestChat = username + ": *this chat was blocked x" + blockedMsgCount + "*";
+            await uploadToServer(latestChat);
+            chats.value = formatValues();
+            typeHere.value = "";
           }
           return;
         }
