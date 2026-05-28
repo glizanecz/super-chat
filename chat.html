@@ -930,7 +930,7 @@
       }
 
       function turnChatstoString() {
-        let stringedChat = chatLog.map(line => line.split(": ")[1] || line).join(""); 
+        let stringedChat = chatLog.join("");
         fakeConsole.value = stringedChat;
         return stringedChat;
       }
