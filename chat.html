@@ -696,6 +696,7 @@
       let lockedUser = 0;
       let latestChat = "";
       let chatLog = [];
+      let newChatOrdered = [];
       let serverTimeOffset;
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
       let blockedMsgCount = 0;
@@ -788,7 +789,7 @@
       }
 
       function formatValues() {
-        let newChatOrdered = [];
+        newChatOrdered = [];
         for (let i = (chatLog.length - 1); i >= 0; i--) {
           newChatOrdered.push(chatLog[i]);
         }
@@ -930,7 +931,13 @@
       }
 
       function turnChatstoString() {
-        let stringedChat = chatLog.join("");
+        let stringedChat = "";
+        newChatOrdered = [];
+        formatValues();
+        for (let i = chatLog.length; i < chatLog.length; i++) {
+          newChatOrdered[i] = newChatOrdered[i].split(": ")[1]
+          stringedChat += newChatOrdered[i]
+        }
         fakeConsole.value = stringedChat;
         return stringedChat;
       }
