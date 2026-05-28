@@ -707,7 +707,7 @@
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
-          if (isTextProfane(typeHere.value) === true || isTextProfane(turnChatstoString()) === true) {
+          if (isTextProfane(typeHere.value) === true || isTextProfane(stringedChat) === true) {
             blockedMsgCount += 1;
             if (blockedMsgCount === 2) {
               errorMsgBox.style.display = "block";
@@ -930,17 +930,21 @@
           return false
       }
 
-      function turnChatstoString() {
-        let stringedChat = "";
-        newChatOrdered = [];
-        formatValues();
-        for (let i = chatLog.length; i < chatLog.length; i++) {
-          newChatOrdered[i] = newChatOrdered[i].split(": ")[1]
-          stringedChat += newChatOrdered[i]
+      async function turnChatstoString() {
+        while (true) {
+          let stringedChat = "";
+          newChatOrdered = [];
+          formatValues();
+          for (let i = chatLog.length; i < chatLog.length; i++) {
+            newChatOrdered[i] = newChatOrdered[i].split(": ")[1]
+            stringedChat += newChatOrdered[i]
+          }
+          fakeConsole.value = stringedChat;
+          return stringedChat;
         }
-        fakeConsole.value = stringedChat;
-        return stringedChat;
       }
+
+      turnChatstoString();
 
 
       async function banUserFor(time) {
