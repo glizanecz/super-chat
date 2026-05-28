@@ -953,9 +953,9 @@
 
       function chatTextOnly() {
         let stringedMsg = ""
-        rawUserMsgs.forEach(element => {
-          stringedMsg += rawUserMsgs(element);
-        });
+        for (let i = 0; i < rawUserMsgs.length; i++) {
+          stringedMsg += rawUserMsgs[i]
+        }
         return stringedMsg
       }
     </script>
