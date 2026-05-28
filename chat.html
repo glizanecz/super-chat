@@ -138,6 +138,7 @@
       const chats = document.getElementById("chats");
       const saveRef = doc(db, "chats", "messages")
       const settingsRef = doc(db, "server", "settings");
+      let rawUserMsgs = [];
 
       const ai = getAI(app, {
         backend: new GoogleAIBackend()
@@ -736,11 +737,12 @@
               lockedUser = 1;
               return;
             }
-            chatLog.push(sentAt + " | You: *this chat was blocked*");
+            chatLog.unshift(sentAt + " | You: *this chat was blocked*");
+            rawUserMsgs.unshift("*chatblocked*");
             latestChat = username + ": *this chat was blocked*";
             try {
               await uploadToServer(latestChat);
-              chats.value = formatValues();
+              chats.value = chatLog
               typeHere.value = "";
               return;
             } catch (error) {
@@ -770,10 +772,11 @@
             }
             return;
           } */
-          chatLog.push(sentAt + " | You: " + typeHere.value);
+          chatLog.unshift(sentAt + " | You: " + typeHere.value);
+          rawUserMsgs.unshift(typeHere.value.replace(/ /g, ""))
           latestChat = username + ": " + typeHere.value;
           try {
-            chats.value = formatValues();
+            chats.value = chatLog;
             await uploadToServer(latestChat);
             cooltimeOver = 0;
             await startCoolDown();
@@ -794,14 +797,6 @@
         })
       }
 
-      function formatValues() {
-        newChatOrdered = [];
-        for (let i = (chatLog.length - 1); i >= 0; i--) {
-          newChatOrdered.push(chatLog[i]);
-        }
-        return newChatOrdered.join("\n");
-      }
-
       onSnapshot(saveRef, (docSnap) => {
         if (!docSnap.exists()) return
 
@@ -816,8 +811,8 @@
         const sentAt = data.lastChatDate?.toDate ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
 
         latestChat = sentAt + " | " + data.lastMessage;
-        chatLog.push(latestChat);
-        chats.value = formatValues();
+        chatLog.unshift(latestChat);
+        chats.value = chatLog;
       })
 
       async function checkProfanityAI(text) {
@@ -957,15 +952,7 @@
       }
 
       function chatTextOnly() {
-        formatValues();
-        chatWOUserOrTime = [];
-        for (let i = 0; i < newChatOrdered.length; i++) {
-          chatWOTime = newChatOrdered[i].split("|")[1]
-          chatWOUser = chatWOTime.split(": ")[1]
-          chatWOUserOrTime += chatWOUser;
-        }
-        fakeConsole.value = chatWOUserOrTime.toLowerCase().replaceAll("undefined", "");
-        return chatWOUserOrTime.toLowerCase().replaceAll("undefined", "")
+
       }
     </script>
   </body>
