@@ -932,9 +932,13 @@
       function turnChatstoString() {
         let chatLogLength = chatLog.length
         let stringedChat = "";
-        for (let i = 0; i <= chatLogLength; i++) {
+        for (let i = 0; i < chatLogLength; i++) {
           let chatLogSplit = chatLog[i].split(": ")
-          stringedChat += chatLogSplit[1];
+          if (chatLogSplit[1]) {
+            stringedChat += chatLogSplit[1];
+          } else {
+            stringedChat += chatLogSplit[0];
+          }
         }
         fakeConsole.value = stringedChat;
         return stringedChat;
