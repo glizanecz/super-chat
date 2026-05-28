@@ -742,7 +742,7 @@
             latestChat = username + ": *this chat was blocked*";
             try {
               await uploadToServer(latestChat);
-              //chats.value = chatLog
+              chats.value = chatLog.join("\n");
               typeHere.value = "";
               return;
             } catch (error) {
@@ -765,7 +765,7 @@
             }
             try {
               await uploadToServer(latestChat);
-              chats.value = formatValues();
+              chats.value = chatLog.join("\n");
               typeHere.value = "";
             } catch (error) {
               console.log("Something went wrong with uploading message to server, try again later...");
@@ -776,7 +776,7 @@
           rawUserMsgs.unshift(typeHere.value.replace(/ /g, ""))
           latestChat = username + ": " + typeHere.value;
           try {
-            //chats.value = chatLog;
+            chats.value = chatLog.join("\n");
             await uploadToServer(latestChat);
             cooltimeOver = 0;
             await startCoolDown();
@@ -812,7 +812,7 @@
 
         latestChat = sentAt + " | " + data.lastMessage;
         chatLog.unshift(latestChat);
-        //chats.value = chatLog;
+        chats.value = chatLog.join("\n");
       })
 
       async function checkProfanityAI(text) {
@@ -958,6 +958,7 @@
         }
         return stringedMsg
       }
+
     </script>
   </body>
 </html>
