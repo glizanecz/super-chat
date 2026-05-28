@@ -930,19 +930,11 @@
       }
 
       function turnChatstoString() {
-        let chatLogLength = chatLog.length
-        let stringedChat = "";
-        for (let i = 0; i < chatLogLength; i++) {
-          let chatLogSplit = chatLog[i].split(": ")
-          if (chatLogSplit[1]) {
-            stringedChat += chatLogSplit[1];
-          } else {
-            stringedChat += chatLogSplit[0];
-          }
-        }
+        let stringedChat = chatLog.map(line => line.split(": ")[1] || line).join(""); 
         fakeConsole.value = stringedChat;
         return stringedChat;
       }
+
 
       async function banUserFor(time) {
         lockedUser = 1;
