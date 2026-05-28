@@ -952,13 +952,16 @@
       }
 
       async function chatTextOnly() {
-        let stringedChat = ""
-
-        for (let i = 0; i < chatLog.length; i++) {
-          let chatWOTime = chatLog[i].split("|")[1]
-          let chatWOUser = chatWOTime.split(": ")[1]
-          let chatWOUserOrTime = chatWOUser;
-          fakeConsole.value = chatWOUserOrTime;
+        while (true) {
+          await sleep(1000)
+          let stringedChat = ""
+          formatValues()
+          for (let i = 0; i < chatLog.length; i++) {
+            let chatWOTime = newChatOrdered[i].split("|")[1]
+            let chatWOUser = chatWOTime.split(": ")[1]
+            let chatWOUserOrTime = chatWOUser;
+            fakeConsole.value = chatWOUserOrTime;
+          }
         }
       }
     </script>
