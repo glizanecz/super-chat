@@ -700,6 +700,9 @@
       let latestChat = "";
       let chatLog = [];
       let newChatOrdered = [];
+      let chatWOTime;
+      let chatWOUser;
+      let chatWOUserOrTime;
       let serverTimeOffset;
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
       let blockedMsgCount = 0;
@@ -710,7 +713,7 @@
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
-          if (isTextProfane(typeHere.value) === true) {
+          if (isTextProfane(typeHere.value) === true || isTextProfane(chatTextOnly()) === true) {
             blockedMsgCount += 1;
             if (blockedMsgCount === 2) {
               errorMsgBox.style.display = "block";
@@ -954,17 +957,14 @@
       }
 
       async function chatTextOnly() {
-        while (true) {
-          await sleep(1000)
-          let stringedChat = ""
-          formatValues()
-          for (let i = 0; i < chatLog.length; i++) {
-            let chatWOTime = newChatOrdered[i].split("|")[1]
-            let chatWOUser = chatWOTime.split(": ")[1]
-            let chatWOUserOrTime = chatWOUser;
-            fakeConsole.value = chatWOUserOrTime;
-          }
+        formatValues();
+        for (let i = 0; i < newChatOrdered.length; i++) {
+          chatWOTime = newChatOrdered[i].split("|")[1]
+          chatWOUser = chatWOTime.split(": ")[1]
+          chatWOUserOrTime += chatWOUser;
         }
+        fakeConsole.value = chatWOUserOrTime.toLowerCase().replaceAll("undefined", "");
+        return chatWOUserOrTime.toLowerCase().replaceAll("undefined", "")
       }
     </script>
   </body>
