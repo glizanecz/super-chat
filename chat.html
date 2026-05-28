@@ -736,11 +736,13 @@
               await uploadToServer(latestChat);
               chats.value = formatValues();
               typeHere.value = "";
+              cooltimeOver = 0
               return;
             } catch (error) {
               console.error(error);
               errorMsgBox.style.display = "block";
               errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
+              cooltimeOver = 0
               return;
             }
           }
