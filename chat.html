@@ -742,7 +742,7 @@
             latestChat = username + ": *this chat was blocked*";
             try {
               await uploadToServer(latestChat);
-              chats.value = chatLog
+              //chats.value = chatLog
               typeHere.value = "";
               return;
             } catch (error) {
@@ -776,7 +776,7 @@
           rawUserMsgs.unshift(typeHere.value.replace(/ /g, ""))
           latestChat = username + ": " + typeHere.value;
           try {
-            chats.value = chatLog;
+            //chats.value = chatLog;
             await uploadToServer(latestChat);
             cooltimeOver = 0;
             await startCoolDown();
@@ -812,7 +812,7 @@
 
         latestChat = sentAt + " | " + data.lastMessage;
         chatLog.unshift(latestChat);
-        chats.value = chatLog;
+        //chats.value = chatLog;
       })
 
       async function checkProfanityAI(text) {
