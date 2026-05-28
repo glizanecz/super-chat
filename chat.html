@@ -952,7 +952,11 @@
       }
 
       function chatTextOnly() {
-
+        let stringedMsg = ""
+        rawUserMsgs.forEach(element => {
+          stringedMsg += rawUserMsgs(element);
+        });
+        return stringedMsg
       }
     </script>
   </body>
