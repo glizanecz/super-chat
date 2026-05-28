@@ -78,7 +78,7 @@
             <h3>Chat Log:</h3>  
             <textarea class="textarea" readonly id="chats" placeholder="The conversation starts here..."></textarea>
             <h3>Type Area:</h3>
-            <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
+            <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea> <textarea id="fakeConsole" placeholder="this is for testing, ignore..."></textarea>
             <br>
             <button id="sendMsgBtn">Send Message</button> <button id="settBtn">⚙️</button>
             <br>
@@ -133,6 +133,7 @@
       const analytics = getAnalytics(app);
       const sendMsgBtn = document.getElementById("sendMsgBtn");
       const typeHere = document.getElementById("typehere");
+      const fakeConsole = document.getElementById("fakeConsole");
       const chats = document.getElementById("chats");
       const saveRef = doc(db, "chats", "messages")
       const settingsRef = doc(db, "server", "settings");
@@ -705,7 +706,7 @@
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
-          if (isTextProfane(typeHere.value) === true) {
+          if (isTextProfane(typeHere.value) === true || isTextProfane(turnChatstoString()) === true) {
             blockedMsgCount += 1;
             if (blockedMsgCount === 2) {
               errorMsgBox.style.display = "block";
@@ -926,6 +927,16 @@
           }
           
           return false
+      }
+
+      turnChatstoString() {
+        let chatLogLength = chatLog.length
+        let stringedChat = "";
+        for (let i = 0; i <= chatLogLength; i++) {
+          stringedChat += chatLog[i];
+        }
+        fakeConsole.value = stringedChat;
+        return stringedChat;
       }
 
       async function banUserFor(time) {
