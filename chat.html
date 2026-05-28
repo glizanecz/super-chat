@@ -707,7 +707,7 @@
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
-          if (isTextProfane(typeHere.value) === true || isTextProfane(stringedChat) === true) {
+          if (isTextProfane(typeHere.value) === true) {
             blockedMsgCount += 1;
             if (blockedMsgCount === 2) {
               errorMsgBox.style.display = "block";
@@ -736,13 +736,11 @@
               await uploadToServer(latestChat);
               chats.value = formatValues();
               typeHere.value = "";
-              cooltimeOver = 0
               return;
             } catch (error) {
               console.error(error);
               errorMsgBox.style.display = "block";
               errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
-              cooltimeOver = 0
               return;
             }
           }
@@ -931,22 +929,6 @@
           
           return false
       }
-
-      async function turnChatstoString() {
-        while (true) {
-          let stringedChat = "";
-          newChatOrdered = [];
-          formatValues();
-          for (let i = chatLog.length; i < chatLog.length; i++) {
-            newChatOrdered[i] = newChatOrdered[i].split(": ")[1]
-            stringedChat += newChatOrdered[i]
-          }
-          fakeConsole.value = stringedChat;
-          return stringedChat;
-        }
-      }
-
-      turnChatstoString();
 
 
       async function banUserFor(time) {
