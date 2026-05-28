@@ -933,7 +933,8 @@
         let chatLogLength = chatLog.length
         let stringedChat = "";
         for (let i = 0; i <= chatLogLength; i++) {
-          stringedChat += chatLog[i];
+          let chatLogSplit = chatLog[i].split(": ")
+          stringedChat += chatLogSplit[1];
         }
         fakeConsole.value = stringedChat;
         return stringedChat;
