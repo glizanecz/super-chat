@@ -958,6 +958,7 @@
 
       async function chatTextOnly() {
         formatValues();
+        chatWOUserOrTime = [];
         for (let i = 0; i < newChatOrdered.length; i++) {
           chatWOTime = newChatOrdered[i].split("|")[1]
           chatWOUser = chatWOTime.split(": ")[1]
