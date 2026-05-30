@@ -886,13 +886,13 @@
             alert("Username can't be over 12 characters!")
           } else {
             username = answer.replace(/\s/g, "");
-            alert("Username set!")
+            alert("Username set to" + username + "!")
           }
           answer = prompt("What room do you want to join? (say 'main' to stay in main chat)");
           if (isTextProfane(answer) === true) {
             alert("Room ID is profane and invalid!")
           } else if (answer.length > 6) {
-            alert("Username can't be over 6 characters!")
+            alert("Room ID can't be over 6 characters!")
           } else {
             roomID = answer.replaceAll(" ", "");
             alert("Joined Room ID: " + roomID + "!");
