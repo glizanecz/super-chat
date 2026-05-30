@@ -909,12 +909,14 @@
             roomID = answer.replaceAll(" ", "");
             alert("Joined Room ID: " + roomID + "!");
             saveRef = doc(db, "chats", roomID);
+            createChatIfNeeded();
           }
         }
       }
 
       async function createChatIfNeeded() {
         try {
+          chats.value = "";
           let snapShotOfRoomID = await getDoc(saveRef);
           let data = snapShotOfRoomID.data();
           if (!snapShotOfRoomID.exists()) {
@@ -928,7 +930,7 @@
           }
           chats.value = data.lastChatDate + " | " + data.lastMessage;
         } catch (error) {
-
+          console.log("Error fetching data from the server...")
         }
       }
 
