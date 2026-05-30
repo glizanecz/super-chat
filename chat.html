@@ -64,6 +64,10 @@
           width: fit-content;
           display: none;
         }
+
+        fakeC {
+          display: none;
+        }
     </style>
   </head>
   <body>
@@ -79,7 +83,7 @@
             <textarea class="textarea" readonly id="chats" placeholder="The conversation starts here..."></textarea>
             <h3>Type Area:</h3>
             <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
-            <textarea id="fakeConsole"></textarea>
+            <textarea class="fakeC" id="fakeConsole"></textarea>
             <br>
             <button id="sendMsgBtn">Send Message</button> <button id="settBtn">⚙️</button>
             <br>
