@@ -140,7 +140,7 @@
       const typeHere = document.getElementById("typehere");
       const fakeConsole = document.getElementById("fakeConsole");
       const chats = document.getElementById("chats");
-      let roomID = "main";
+      let roomID = "main01";
       let saveRef = doc(db, "chats", roomID);
       const settingsRef = doc(db, "server", "settings");
       let rawUserMsgs = [];
@@ -894,17 +894,18 @@
 
       settBtnRoom.onclick = function settingsBtnRoom() {
         if (cooldownUser === 1) {
-          let answer = prompt("What room do you want to join? (say 'main' to stay in main chat)");
+          let answer = prompt("What room do you want to join? (say 'main01' to stay in main chat)");
           if (isTextProfane(answer) === true) {
             alert("Room ID is profane and invalid!")
           } else if (answer.length > 6) {
             alert("Room ID can't be over 6 characters!")
-          } else if (answer.length < 6 && answer != "main") {
+          } else if (answer.length < 6) {
             alert("Room ID can't be under 6 characters!")
-          } else if (answer === "main") {
+          } else if (answer === "main01") {
             alert("Joined main chat!")
-            roomID = "main";
+            roomID = "main01";
             saveRef = doc(db, "chats", roomID);
+            createChatIfNeeded();
           } else {
             roomID = answer.replaceAll(" ", "");
             alert("Joined Room ID: " + roomID + "!");
