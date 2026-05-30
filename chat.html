@@ -139,6 +139,7 @@
       const saveRef = doc(db, "chats", "messages")
       const settingsRef = doc(db, "server", "settings");
       let rawUserMsgs = [];
+      let rawUserMsgsBack = [];
 
       const ai = getAI(app, {
         backend: new GoogleAIBackend()
@@ -715,7 +716,8 @@
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
           rawUserMsgs.push(typeHere.value.replace(/ /g, ""))
-          if (isTextProfane(typeHere.value) === true || isTextProfane(chatTextOnly()) === true) {
+          rawUserMsgsBack.unshift(typeHere.value.replace(/ /g, ""));
+          if (isTextProfane(typeHere.value) === true || isTextProfane(chatTextOnly()) === true || isTextProfane(chatTextOnly().split("").reverse().join("")) === true) {
             blockedMsgCount += 1;
             if (blockedMsgCount === 2) {
               errorMsgBox.style.display = "block";
@@ -958,6 +960,7 @@
         fakeConsole.value = stringedMsg;
         return stringedMsg
       }
+
 
     </script>
   </body>
