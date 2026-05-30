@@ -880,7 +880,6 @@
       settBtn.onclick = function settingsBtn() {
         if (cooldownUser === 1) {
           let answer = prompt("What do you want as your username?")
-          let chatRoomIDA = prompt("What room do you want to join? (say 'main' to stay in main chat)");
           if (isTextProfane(answer) === true) {
             alert("Username is profane and invalid!")
           } else if (answer.length > 12) {
