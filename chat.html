@@ -79,7 +79,7 @@
             </div>
             <h2 class="welcome">Welcome to Super Chat</h2>
             <h5><a href="#rules">Community Rules</a></h5>
-            <h3>Chat Log:</h3>  
+            <h3>Chat Log:</h3> <button id="settBtnRoom">⚙️</button> 
             <textarea class="textarea" readonly id="chats" placeholder="The conversation starts here..."></textarea>
             <h3>Type Area:</h3>
             <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
@@ -715,6 +715,7 @@
       let blockedMsgCount = 0;
       const errorMsgBox = document.getElementById("errorMsg");
       const settBtn = document.getElementById("settBtn");
+      const settBtnRoom = document.getElementById("settBtnRoom");
 
       sendMsgBtn.onclick = async function() {
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
@@ -888,7 +889,12 @@
             username = answer.replaceAll(" ", "");
             alert("Username set to " + username + "!")
           }
-          answer = prompt("What room do you want to join? (say 'main' to stay in main chat)");
+        }
+      }
+
+      settBtnRoom.onclick = function settingsBtnRoom() {
+        if (cooldownUser === 1) {
+          let answer = prompt("What room do you want to join? (say 'main' to stay in main chat)");
           if (isTextProfane(answer) === true) {
             alert("Room ID is profane and invalid!")
           } else if (answer.length > 6) {
