@@ -710,6 +710,7 @@
       let chatWOUser;
       let chatWOUserOrTime;
       let serverTimeOffset;
+      let roomID;
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
       let blockedMsgCount = 0;
       const errorMsgBox = document.getElementById("errorMsg");
@@ -887,6 +888,15 @@
           } else {
             username = answer.replace(/\s/g, "");
             alert("Username set!")
+          }
+          answer = prompt("What room do you want to join? (say 'main' to stay in main chat)");
+          if (isTextProfane(answer) === true) {
+            alert("Room ID is profane and invalid!")
+          } else if (answer.length > 6) {
+            alert("Username can't be over 6 characters!")
+          } else {
+            roomID = answer.replaceAll(" ", "");
+            alert("Joined Room ID: " + roomID + "!");
           }
         }
       }
