@@ -714,6 +714,7 @@
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
           const adjustedTimeNumber = Date.now() + serverTimeOffset;
           const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
+          rawUserMsgs.push(typeHere.value.replace(/ /g, ""))
           if (isTextProfane(typeHere.value) === true || isTextProfane(chatTextOnly()) === true) {
             blockedMsgCount += 1;
             if (blockedMsgCount === 2) {
@@ -738,7 +739,6 @@
               return;
             }
             chatLog.unshift(sentAt + " | You: *this chat was blocked*");
-            rawUserMsgs.unshift("*chatblocked*");
             latestChat = username + ": *this chat was blocked*";
             try {
               await uploadToServer(latestChat);
@@ -773,7 +773,6 @@
             return;
           } */
           chatLog.unshift(sentAt + " | You: " + typeHere.value);
-          rawUserMsgs.unshift(typeHere.value.replace(/ /g, ""))
           latestChat = username + ": " + typeHere.value;
           try {
             chats.value = chatLog.join("\n");
