@@ -711,6 +711,7 @@
       let chatWOUser;
       let chatWOUserOrTime;
       let serverTimeOffset;
+      let lockChat = 0;
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
       let blockedMsgCount = 0;
       const errorMsgBox = document.getElementById("errorMsg");
@@ -805,6 +806,7 @@
       }
 
       onSnapshot(saveRef, (docSnap) => {
+        if (lockChat === 1) return;
         if (!docSnap.exists()) return
 
         const data = docSnap.data();
@@ -923,10 +925,11 @@
 
       async function createChatIfNeeded() {
         try {
+          lockChat = 1;
           chats.value = "";
           let snapShotOfRoomID = await getDoc(saveRef);
           let data = snapShotOfRoomID.data();
-          const saveAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+          const saveAt = data.lastChatDate?.toDate() ? data.lastChatDate?.toDate().toLocaleTimeString() : "pending";
           if (!snapShotOfRoomID.exists()) {
             await setDoc(saveRef, {
               lastUsername: username,
@@ -937,7 +940,9 @@
             return;
           }
           chats.value = saveAt + " | " + data.lastMessage;
+          lockChat = 0;
         } catch (error) {
+          lockChat = 0;
           console.log("Error fetching data from the server...")
         }
       }
