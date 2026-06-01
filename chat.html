@@ -714,6 +714,7 @@
       let lockChat = 0;
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
       let blockedMsgCount = 0;
+      let unsubscribeListener = startChatListener();
       const errorMsgBox = document.getElementById("errorMsg");
       const settBtn = document.getElementById("settBtn");
       const settBtnRoom = document.getElementById("settBtnRoom");
@@ -805,24 +806,26 @@
         })
       }
 
-      onSnapshot(saveRef, (docSnap) => {
-        if (lockChat === 1) return;
-        if (!docSnap.exists()) return
+      function startChatListener() {
+        return onSnapshot(saveRef, (docSnap) => {
+          if (lockChat === 1) return;
+          if (!docSnap.exists()) return
 
-        const data = docSnap.data();
+          const data = docSnap.data();
 
-        if (data.lastMessage === latestChat) return
-        if (!data.lastMessage) return;
+          if (data.lastMessage === latestChat) return
+          if (!data.lastMessage) return;
 
-        const serverTimeNumber = data.lastChatDate.toDate().getTime();
-        serverTimeOffset = serverTimeNumber - Date.now();
+          const serverTimeNumber = data.lastChatDate.toDate().getTime();
+          serverTimeOffset = serverTimeNumber - Date.now();
 
-        const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+          const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
 
-        latestChat = sentAt + " | " + data.lastMessage;
-        chatLog.unshift(latestChat);
-        chats.value = chatLog.join("\n");
-      })
+          latestChat = sentAt + " | " + data.lastMessage;
+          chatLog.unshift(latestChat);
+          chats.value = chatLog.join("\n");
+        })
+      }
 
       async function checkProfanityAI(text) {
         const prompt = `
@@ -907,17 +910,21 @@
             alert("Joined main chat!")
             roomID = "main01";
             saveRef = doc(db, "chats", roomID);
+            if (unsubscribeListener) unsubscribeListener();
             chatLog = [];
             rawUserMsgs = [];
             rawUserMsgsBack = [];
+            unsubscribeListener = startChatListener();
             createChatIfNeeded();
           } else {
             roomID = answer.replaceAll(" ", "");
             alert("Joined Room ID: " + roomID + "!");
             saveRef = doc(db, "chats", roomID);
+            if (unsubscribeListener) unsubscribeListener();
             chatLog = [];
             rawUserMsgs = [];
             rawUserMsgsBack = [];
+            unsubscribeListener = startChatListener();
             createChatIfNeeded();
           }
         }
@@ -937,6 +944,7 @@
               lastMessage: "New chat created!"
             })
             chats.value = "Server: New chat created!";
+            lockChat = 0; //this needed to be here//
             return;
           }
           chats.value = saveAt + " | " + data.lastMessage;
