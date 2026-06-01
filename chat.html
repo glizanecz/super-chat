@@ -905,11 +905,17 @@
             alert("Joined main chat!")
             roomID = "main01";
             saveRef = doc(db, "chats", roomID);
+            chatLog = [];
+            rawUserMsgs = [];
+            rawUserMsgsBack = [];
             createChatIfNeeded();
           } else {
             roomID = answer.replaceAll(" ", "");
             alert("Joined Room ID: " + roomID + "!");
             saveRef = doc(db, "chats", roomID);
+            chatLog = [];
+            rawUserMsgs = [];
+            rawUserMsgsBack = [];
             createChatIfNeeded();
           }
         }
