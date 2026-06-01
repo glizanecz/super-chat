@@ -62,7 +62,7 @@
           font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
           padding: 20px;
           width: fit-content;
-          display: none;
+          display: block;
         }
 
         .fakeC {
@@ -716,6 +716,7 @@
       let blockedMsgCount = 0;
       let unsubscribeListener = startChatListener();
       const errorMsgBox = document.getElementById("errorMsg");
+      errorMsgBox.innerText = "Super Chat is broken right now, repairs are happening."
       const settBtn = document.getElementById("settBtn");
       const settBtnRoom = document.getElementById("settBtnRoom");
 
