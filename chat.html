@@ -87,11 +87,24 @@
         .typeHere {
           background-image: url("rainbow2.jpg");
         }
+
+        .startPage {
+            background-color: rgb(165, 216, 234);
+            border-radius: 20px;
+            border: 2px solid rgb(29, 108, 168);
+            display: grid;
+            place-items: center;
+            resize: vertical;
+            padding: 10px;
+            width: 100%;
+            min-width: 0;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;     
+        }
     </style>
   </head>
   <body>
     <main>
-        <div class="background">
+        <div class="background" id="backgroundID">
             <div id="errorMsg" class="errorMsg">
               <h4>Error: Blah Blah</h4>
               <h4>No, refreshing WON'T help.</h4>
@@ -116,6 +129,13 @@
                 <li>50 or more blocked chats will result in a ban</li>
               </ul>
             </div>
+        </div>
+        <div class="startPage" id="startPageID">
+          <div>
+            <h4>Set a username...</h4>
+            <input maxlength="12">
+            <button>Submit</button><button>Continue Without A Username</button>
+          </div>
         </div>
     </main>
     <script type="module">
@@ -738,6 +758,11 @@
       errorMsgBox.innerText = "⚠️Super Chat is currently in development, bugs can/will happen!⚠️"
       const settBtn = document.getElementById("settBtn");
       const settBtnRoom = document.getElementById("settBtnRoom");
+      const backgroundID = document.getElementById("backgroundID");
+      backgroundID.style.display = "none";
+      const startPageID = document.getElementById("startPageID");
+
+      
 
       sendMsgBtn.onclick = async function() {
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
