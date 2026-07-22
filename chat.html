@@ -133,8 +133,12 @@
         <div class="startPage" id="startPageID">
           <div>
             <h4>Set a username...</h4>
+            <br>
             <input maxlength="12">
-            <button>Submit</button><button>Continue Without A Username</button>
+            <br>
+            <button>Submit</button>
+            <br>
+            <button>Continue Without A Username</button>
           </div>
         </div>
     </main>
@@ -762,7 +766,7 @@
       backgroundID.style.display = "none";
       const startPageID = document.getElementById("startPageID");
 
-      
+
 
       sendMsgBtn.onclick = async function() {
         if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
