@@ -87,19 +87,6 @@
         .typeHere {
           background-image: url("rainbow2.jpg");
         }
-
-        .startPage {
-            background-color: rgb(165, 216, 234);
-            border-radius: 20px;
-            border: 2px solid rgb(29, 108, 168);
-            display: grid;
-            place-items: center;
-            resize: vertical;
-            padding: 10px;
-            width: 100%;
-            min-width: 0;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;     
-        }
     </style>
   </head>
   <body>
@@ -129,17 +116,6 @@
                 <li>50 or more blocked chats will result in a ban</li>
               </ul>
             </div>
-        </div>
-        <div class="startPage" id="startPageID">
-          <div>
-            <h4>Set a username...</h4>
-            <br>
-            <input maxlength="12">
-            <br>
-            <button>Submit</button>
-            <br>
-            <button>Continue Without A Username</button>
-          </div>
         </div>
     </main>
     <script type="module">
@@ -756,15 +732,43 @@
       let serverTimeOffset;
       let lockChat = 0;
       let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
+      function usernameSettingAtStart () {
+        let userTempAnswer = prompt("Would you like to set your username or have one provided? (Enter 1 or 2)");
+        if (userTempAnswer === "1") {
+          let usernamePrompt = prompt("What would you like it to be?");
+          if (isTextProfane(usernamePrompt) === true) {
+            alert("Username is profane and invalid!")
+            while (usernamePrompt.length > 12 || usernamePrompt.length === 0 || isTextProfane(usernamePrompt) || usernamePrompt == null) {
+              usernamePrompt = prompt("Please choose another username...");
+            }
+          } else if (usernamePrompt.length > 12) {
+            alert("Username can't be over 12 characters!")
+            while (usernamePrompt.length > 12 || usernamePrompt.length === 0 || isTextProfane(usernamePrompt) || usernamePrompt == null) {
+              usernamePrompt = prompt("Please choose another username...");
+            }
+          } else if (usernamePrompt.length === 0) {
+            alert("Username can't be nothing!")
+            while (usernamePrompt.length > 12 || usernamePrompt.length === 0 || isTextProfane(usernamePrompt) || usernamePrompt == null) {
+              usernamePrompt = prompt("Please choose another username...");
+            }
+          } else {
+            username = usernamePrompt.replaceAll(" ", "");
+            alert("Username set to " + username + "!")
+          } 
+        } else {
+          alert("Your name has been randomly set, you can change it in settings!")
+        }
+      }
+      usernameSettingAtStart();
+
       let blockedMsgCount = 0;
       let unsubscribeListener = startChatListener();
       const errorMsgBox = document.getElementById("errorMsg");
       errorMsgBox.innerText = "⚠️Super Chat is currently in development, bugs can/will happen!⚠️"
       const settBtn = document.getElementById("settBtn");
       const settBtnRoom = document.getElementById("settBtnRoom");
-      const backgroundID = document.getElementById("backgroundID");
-      backgroundID.style.display = "none";
-      const startPageID = document.getElementById("startPageID");
+
+
 
 
 
