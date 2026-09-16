@@ -150,13 +150,13 @@
         const typeHere = document.getElementById("typehere");
         const fakeConsole = document.getElementById("fakeConsole");
         const chats = document.getElementById("chats");
+        let roomRef = doc(db, "chats", roomID);
         let unsubscribeListener = startChatListener();
         const errorMsgBox = document.getElementById("errorMsg");
         errorMsgBox.innerText = "⚠️Super Chat is currently in development, bugs can/will happen!⚠️"
         const settBtn = document.getElementById("settBtn");
         const settBtnRoom = document.getElementById("settBtnRoom");
         let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
-        let roomRef = doc(db, "chats", roomID);
 
         sendMsgBtn.onclick = await sendMessageFunction();
         
