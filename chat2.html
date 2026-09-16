@@ -148,6 +148,7 @@
         const analytics = getAnalytics(app);
         let roomID = "main01";
         let chatStorage = [];
+        let latestChat = "";
         const sendMsgBtn = document.getElementById("sendMsgBtn");
         const typeHere = document.getElementById("typehere");
         const fakeConsole = document.getElementById("fakeConsole");
@@ -162,9 +163,9 @@
         sendMsgBtn.onclick = await sendMessageFunction();
         
         async function sendMessageFunction() {
-            let latestChat = typeHere.value;
+            latestChat = typeHere.value;
             typeHere.value = "";
-            let sanitizedChat = isTextProfane(sanitizedChat) ? "*chat was blocked*" : latestChat;
+            let sanitizedChat = isTextProfane(latestChat) ? "*chat was blocked*" : latestChat;
             if (!roomID === "nolims") {
                 try {
                     await uploadToServer(sanitizedChat);
