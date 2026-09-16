@@ -268,11 +268,6 @@
                             console.log("NO LIM CHAT HAS BEEN DISABLED!")
                             return
                         }
-                        await setDoc(doc(db, "chats", roomID), {
-                            lastUsername: username,
-                            lastChatDate: serverTimestamp(),
-                            lastMessage: chatSent,
-                        }, { merge: true });
                     }
                 } catch (error) {
                     console.error(error)
