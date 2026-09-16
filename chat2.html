@@ -244,7 +244,7 @@
         }
 
         function startChatListener() {
-            return onSnapshot(saveRef, (docSnap) => {
+            return onSnapshot(roomRef, (docSnap) => {
             if (lockChat === 1) return;
             if (!docSnap.exists()) return
 
@@ -262,6 +262,30 @@
             chatLog.unshift(latestChat);
             chats.value = chatLog.join("\n");
             })
+        }
+
+        async function createChatIfNeeded() {
+            try {
+                chats.value = "";
+                let snapShotOfRoomID = await getDoc(roomRef);
+                let data = snapShotOfRoomID.data();
+                const saveAt = data.lastChatDate?.toDate() ? data.lastChatDate?.toDate().toLocaleTimeString() : "pending";
+                if (!snapShotOfRoomID.exists()) {
+                    await setDoc(roomRef, {
+                        lastUsername: username,
+                        lastChatDate: serverTimestamp(),
+                        lastMessage: "New chat created!"
+                    })
+                    chats.value = "Server: New chat created!";
+                    lockChat = 0; //this needed to be here//
+                    return;
+                }
+                chats.value = saveAt + " | " + data.lastMessage;
+                lockChat = 0;
+            } catch (error) {
+                lockChat = 0;
+                console.log("Error fetching data from the server...")
+            }
         }
 
         settBtnRoom.onclick = establishRoom();
