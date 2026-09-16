@@ -156,7 +156,7 @@
         const settBtn = document.getElementById("settBtn");
         const settBtnRoom = document.getElementById("settBtnRoom");
         let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
-
+        let roomRef = doc(db, "chats", roomID);
 
         sendMsgBtn.onclick = await sendMessageFunction();
         
@@ -215,7 +215,8 @@
 
         async function establishRoom() {
             let roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
-            while (roomPrompt === "LIST") {
+            let roomPromptLengthClean = roomPrompt.replaceAll(" ", "").length;
+            while (roomPromptLengthClean === "LIST") {
                 alert(`main01 - starting chat
                 main02 - extention of main chat
                 nolims - no filter chat
@@ -226,13 +227,44 @@
                 `)
                 roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
             }
-            if (roomPrompt.length < 6 || roomPrompt.length > 6) {
-                while (roomPrompt.length < 6 || roomPrompt.length > 6) {
-                    roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
+            if (roomPromptLengthClean < 6 || roomPromptLengthClean > 6) {
+                while (roomPromptLengthClean < 6 || roomPromptLengthClean > 6) {
+                    roomPrompt = prompt("What room would you like to go to?");
+                    roomPromptLengthClean = roomPrompt.replaceAll(" ", "").length;
                 }
                 roomID = roomPrompt;
+                roomRef = doc(db, "chats", roomID)
+                chatLog = [];
+                rawUserMsgs = [];
+                rawUserMsgsBack = [];
+                chats.value = "";
+                if (unsubscribeListener) unsubscribeListener();
+                unsubscribeListener = startChatListener();
             }
         }
+
+        function startChatListener() {
+            return onSnapshot(saveRef, (docSnap) => {
+            if (lockChat === 1) return;
+            if (!docSnap.exists()) return
+
+            const data = docSnap.data();
+
+            if (data.lastMessage === latestChat) return
+            if (!data.lastMessage) return;
+
+            const serverTimeNumber = data.lastChatDate.toDate().getTime();
+            serverTimeOffset = serverTimeNumber - Date.now();
+
+            const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+
+            latestChat = sentAt + " | " + data.lastMessage;
+            chatLog.unshift(latestChat);
+            chats.value = chatLog.join("\n");
+            })
+        }
+
+        settBtnRoom.onclick = establishRoom();
 
         const adjectives = [
             "Swift",
