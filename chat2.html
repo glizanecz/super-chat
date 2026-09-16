@@ -103,11 +103,11 @@
                 <h2>You are about to use an experimental version of Super Chat...</h2>
                 <h5><a href="https://glizanecz.github.io/super-chat/chat.html" target="_blank">Click Me To Go Back To Super Chat 1.0</a></h5>
                 <h3>Many bugs can/will occur; they will likely be fixed soon.</h3>
-                <p>Any chats in the "nolims" room are UNMODERATED, but the room
+                <p>Any chats in the "nolims" room aren't immediately filtered, but the room
                     will be taken down if things get out of hand. Please use "nolims"
                     with respect. Don't make your actions the ones that ruin it. If you
-                    don't want to encounter bad language, please click continue
-                    safely below, which will add a client-side filter EVEN ON "nolims".
+                    don't want to encounter bad language, please click <strong>Continue
+                    Safely</strong> below, which will add a client-side filter EVEN ON "nolims".
                 </p>
                 <button id="continueUnsafely">I Know What I'm Doing, Let There Be Dragons!</button><button id="continueSafely">Continue Safely</button>
             </div>
@@ -219,7 +219,7 @@
             latestChat = typeHere.value;
             const sentAt = new Date().toLocaleTimeString();
             typeHere.value = "";
-            let sanitizedChat = isTextProfane(latestChat) ? "*chat was blocked*" : latestChat;
+            let sanitizedChat = isTextProfane(latestChat) ? gentleBlocks[Math.floor(Math.random() * gentleBlocks.length)] : latestChat;
             let finishedChat = username + ": " + sanitizedChat; 
             let finishedChatNoLims = username + ": " + latestChat;   
             let displayChatForUser =  sentAt + " | You: " + sanitizedChat;   
@@ -321,7 +321,7 @@
                     return
                 } else {
                     if (userEnabledExtraProt && isTextProfane(data.lastMessage)) {
-                        chatLog.unshift(sentAt + " | " + data.lastUsername + ": *a warm blanket drifted over this chat*");
+                        chatLog.unshift(sentAt + " | " + data.lastUsername + ": " + gentleBlocks[Math.floor(Math.random() * gentleBlocks.length)]);
                         chats.value = chatLog.join("\n");
                     } else {
                         chatLog.unshift(latestChat);
@@ -460,6 +460,29 @@
         "Gladiator"
         ];
 
+        const gentleBlocks = [
+            "*a warm blanket drifted over this message*",
+            "*the filter chose violence today*",
+            "*bro actually tried to send that*",
+            "*look at me, my chat got blocked*",
+            "*it'll all be ok*",
+            "*why must you try these things?*",
+            "*rest in peace: this chat*",
+            "*this chat was lost like the library of alexandria*",
+            "*now you see me, now you don't*",
+            "*stop sending these things in chat*",
+            "*the filter is too strong*",
+            "*your efforts to bypass the filter are sad*",
+            "*blocked blocked blocked*",
+            "*maybe i made the chat filter too strong?*",
+            "*read a book.*",
+            "*cover your eyes, you don't want to see this...*",
+            "*this message has been banished*",
+            "*poof, im gone*",
+            "*⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛*",
+            "*this chat has been blocked*",
+            "*wow...*"
+        ];
 
         let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
 

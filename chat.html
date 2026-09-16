@@ -770,6 +770,30 @@
       const settBtn = document.getElementById("settBtn");
       const settBtnRoom = document.getElementById("settBtnRoom");
 
+      const gentleBlocks = [
+        "*a warm blanket drifted over this message*",
+        "*the filter chose violence today*",
+        "*bro actually tried to send that*",
+        "*look at me, my chat got blocked*",
+        "*it'll all be ok*",
+        "*why must you try these things?*",
+        "*rest in peace: this chat*",
+        "*this chat was lost like the library of alexandria*",
+        "*now you see me, now you don't*",
+        "*stop sending these things in chat*",
+        "*the filter is too strong*",
+        "*your efforts to bypass the filter are sad*",
+        "*blocked blocked blocked*",
+        "*maybe i made the chat filter too strong?*",
+        "*read a book.*",
+        "*cover your eyes, you don't want to see this...*",
+        "*this message has been banished*",
+        "*poof, im gone*",
+        "*⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛*",
+        "*this chat has been blocked*",
+        "*wow...*"
+      ];
+
 
 
 
@@ -803,8 +827,8 @@
               lockedUser = 1;
               return;
             }
-            chatLog.unshift(sentAt + " | You: *this chat was blocked*");
-            latestChat = username + ": *this chat was blocked*";
+            chatLog.unshift(sentAt + " | You: " + gentleBlocks[Math.floor(Math.random() * gentleBlocks.length)]);
+            latestChat = username + ": " + gentleBlocks[Math.floor(Math.random() * gentleBlocks.length)];
             try {
               await uploadToServer(latestChat);
               chats.value = chatLog.join("\n");
