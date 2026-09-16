@@ -851,7 +851,7 @@
               await startCoolDown();
             }
           }
-        } else if (roomID === "noLimits") {
+        } else if (roomID === "nolims") {
           if (typeHere.value !== "" && typeHere.value.length < 300) {
             const adjustedTimeNumber = Date.now() + serverTimeOffset;
             const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
