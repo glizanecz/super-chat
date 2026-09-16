@@ -766,6 +766,7 @@
       let unsubscribeListener = startChatListener();
       const errorMsgBox = document.getElementById("errorMsg");
       errorMsgBox.innerText = "⚠️Super Chat is currently in development, bugs can/will happen!⚠️"
+      errorMsgBox.style.display = "none";
       const settBtn = document.getElementById("settBtn");
       const settBtnRoom = document.getElementById("settBtnRoom");
 
@@ -774,97 +775,84 @@
 
 
       sendMsgBtn.onclick = async function() {
-        if (roomID !== "noLimits") {
-          if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
-            const adjustedTimeNumber = Date.now() + serverTimeOffset;
-            const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
-            rawUserMsgs.push(typeHere.value.replace(/ /g, ""))
-            rawUserMsgsBack.unshift(typeHere.value.replace(/ /g, ""));
-            if (isTextProfane(typeHere.value) === true || isTextProfane(chatTextOnly()) === true || isTextProfane(chatTextOnly().split("").reverse().join("")) === true) {
-              blockedMsgCount += 1;
-              if (blockedMsgCount === 2) {
-                errorMsgBox.style.display = "block";
-                errorMsgBox.innerText = "You've been banned for 1 minute..." + "\n" + "No, refreshing WON'T help."
-                banUserFor(60_000)
-                return;
-              } else if (blockedMsgCount === 10) {
-                errorMsgBox.style.display = "block";
-                errorMsgBox.innerText = "You've been banned for 10 minutes" + "\n" + "No, refreshing WON'T help."
-                banUserFor(600_000)
-                return;
-              } else if (blockedMsgCount === 25) {
-                errorMsgBox.style.display = "block";
-                errorMsgBox.innerText = "You've been banned for 25 minutes" + "\n" + "No, refreshing WON'T help."
-                banUserFor(1_500_000)
-                return;
-              } else if (blockedMsgCount === 50) {
-                errorMsgBox.style.display = "block";
-                errorMsgBox.innerText = "You've been hit with the ban hammer!" + "\n" + "No, refreshing WON'T help."
-                lockedUser = 1;
-                return;
-              }
-              chatLog.unshift(sentAt + " | You: *this chat was blocked*");
-              latestChat = username + ": *this chat was blocked*";
-              try {
-                await uploadToServer(latestChat);
-                chats.value = chatLog.join("\n");
-                typeHere.value = "";
-                return;
-              } catch (error) {
-                console.error(error);
-                errorMsgBox.style.display = "block";
-                errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
-                return;
-              }
-            }
-
-            /*
-            if (await checkProfanityAI(typeHere.value) === "NO") {
-              blockedMsgCount += 1;
-              if (blockedMsgCount === 1) {
-                chatLog.push(username + ": *this chat was blocked*");
-                latestChat = username + ": *this chat was blocked*";
-              } else {
-                chatLog.push(username + ": *this chat was blocked x" + blockedMsgCount + "*");
-                latestChat = username + ": *this chat was blocked x" + blockedMsgCount + "*";
-              }
-              try {
-                await uploadToServer(latestChat);
-                chats.value = chatLog.join("\n");
-                typeHere.value = "";
-              } catch (error) {
-                console.log("Something went wrong with uploading message to server, try again later...");
-              }
+        if (cooltimeOver === 1 && typeHere.value != "" && lockedUser === 0) {
+          const adjustedTimeNumber = Date.now() + serverTimeOffset;
+          const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
+          rawUserMsgs.push(typeHere.value.replace(/ /g, ""))
+          rawUserMsgsBack.unshift(typeHere.value.replace(/ /g, ""));
+          if (isTextProfane(typeHere.value) === true || isTextProfane(chatTextOnly()) === true || isTextProfane(chatTextOnly().split("").reverse().join("")) === true) {
+            blockedMsgCount += 1;
+            if (blockedMsgCount === 2) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been banned for 1 minute..." + "\n" + "No, refreshing WON'T help."
+              banUserFor(60_000)
               return;
-            } */
-            chatLog.unshift(sentAt + " | You: " + typeHere.value);
-            latestChat = username + ": " + typeHere.value;
+            } else if (blockedMsgCount === 10) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been banned for 10 minutes" + "\n" + "No, refreshing WON'T help."
+              banUserFor(600_000)
+              return;
+            } else if (blockedMsgCount === 25) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been banned for 25 minutes" + "\n" + "No, refreshing WON'T help."
+              banUserFor(1_500_000)
+              return;
+            } else if (blockedMsgCount === 50) {
+              errorMsgBox.style.display = "block";
+              errorMsgBox.innerText = "You've been hit with the ban hammer!" + "\n" + "No, refreshing WON'T help."
+              lockedUser = 1;
+              return;
+            }
+            chatLog.unshift(sentAt + " | You: *this chat was blocked*");
+            latestChat = username + ": *this chat was blocked*";
             try {
-              chats.value = chatLog.join("\n");
               await uploadToServer(latestChat);
-              cooltimeOver = 0;
-              await startCoolDown();
+              chats.value = chatLog.join("\n");
+              typeHere.value = "";
+              return;
             } catch (error) {
               console.error(error);
               errorMsgBox.style.display = "block";
               errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
-              await startCoolDown();
+              return;
             }
           }
-        } else if (roomID === "nolims") {
-          if (typeHere.value !== "" && typeHere.value.length < 300) {
-            const adjustedTimeNumber = Date.now() + serverTimeOffset;
-            const sentAt = new Date(adjustedTimeNumber).toLocaleTimeString();
-            rawUserMsgs.push(typeHere.value.replace(/ /g, ""))
-            rawUserMsgsBack.unshift(typeHere.value.replace(/ /g, ""));
-            chatLog.unshift(sentAt + " | You: " + typeHere.value);
-            latestChat = username + ": " + typeHere.value;
-            await uploadToServer(latestChat)
+
+          /*
+          if (await checkProfanityAI(typeHere.value) === "NO") {
+            blockedMsgCount += 1;
+            if (blockedMsgCount === 1) {
+              chatLog.push(username + ": *this chat was blocked*");
+              latestChat = username + ": *this chat was blocked*";
+            } else {
+              chatLog.push(username + ": *this chat was blocked x" + blockedMsgCount + "*");
+              latestChat = username + ": *this chat was blocked x" + blockedMsgCount + "*";
+            }
+            try {
+              await uploadToServer(latestChat);
+              chats.value = chatLog.join("\n");
+              typeHere.value = "";
+            } catch (error) {
+              console.log("Something went wrong with uploading message to server, try again later...");
+            }
+            return;
+          } */
+          chatLog.unshift(sentAt + " | You: " + typeHere.value);
+          latestChat = username + ": " + typeHere.value;
+          try {
             chats.value = chatLog.join("\n");
-            typeHere.value = "";
+            await uploadToServer(latestChat);
+            cooltimeOver = 0;
+            await startCoolDown();
+          } catch (error) {
+            console.error(error);
+            errorMsgBox.style.display = "block";
+            errorMsgBox.innerText = "Something went wrong with uploading message to server, try again later..." + "\n" + "No, refreshing WON'T help."
+            await startCoolDown();
           }
         }
       }
+
 
       async function uploadToServer() {
         await setDoc(saveRef, {

@@ -99,9 +99,21 @@
             </div>
             <h2 class="welcome">Welcome to Super Chat</h2>
             <h5><a href="#rules">Community Rules</a></h5>
-            <h3>Chat Log:</h3> <button id="settBtnRoom">⚙️</button> 
+            <div class="background" id="warningForNoLims">
+                <h2>You are about to use an experimental version of Super Chat...</h2>
+                <h5><a href="https://glizanecz.github.io/super-chat/chat.html" target="_blank">Click Me To Go Back To Super Chat 1.0</a></h5>
+                <h3>Many bugs can/will occur; they will likely be fixed soon.</h3>
+                <p>Any chats in the "nolims" room are UNMODERATED, but the room
+                    will be taken down if things get out of hand. Please use "nolims"
+                    with respect. Don't make your actions the ones that ruin it. If you
+                    don't want to encounter bad language, please click continue
+                    safely below, which will add a client-side filter EVEN ON "nolims".
+                </p>
+                <button id="continueUnsafely">I Know What I'm Doing, Let There Be Dragons!</button><button id="continueSafely">Continue Safely</button>
+            </div>
+            <h3 id="chatLogText">Chat Log:</h3> <button id="settBtnRoom">⚙️</button> 
             <textarea class="textarea" readonly id="chats" placeholder="The conversation starts here..."></textarea>
-            <h3>Type Area:</h3>
+            <h3 id="typeAreaText">Type Area:</h3>
             <textarea class="textarea" maxlength="300" id="typehere" placeholder="Type your message here..."></textarea>
             <textarea class="fakeC" id="fakeConsole"></textarea>
             <br>
@@ -147,8 +159,14 @@
         const db = getFirestore(app);
         const analytics = getAnalytics(app);
         let roomID = "main01";
+        let noLimsWarningShowed = false;
+        let userEnabledExtraProt = false;
         let chatStorage = [];
+        let chatLog = [];
         let latestChat = "";
+        let rawUserMsgs = [];
+        let serverTimeOffset;
+        let rawUserMsgsBack = [];
         const sendMsgBtn = document.getElementById("sendMsgBtn");
         const typeHere = document.getElementById("typehere");
         const fakeConsole = document.getElementById("fakeConsole");
@@ -156,31 +174,74 @@
         let roomRef = doc(db, "chats", roomID);
         let unsubscribeListener = startChatListener();
         const errorMsgBox = document.getElementById("errorMsg");
-        errorMsgBox.innerText = "⚠️Super Chat is currently in development, bugs can/will happen!⚠️"
+        errorMsgBox.innerText = "⚠️Super Chat 2.0 is currently in development, bugs can/will happen!⚠️"
         const settBtn = document.getElementById("settBtn");
         const settBtnRoom = document.getElementById("settBtnRoom");
+        const chatLogText = document.getElementById("chatLogText");
+        const typeAreaText = document.getElementById("typeAreaText");
 
-        sendMsgBtn.onclick = await sendMessageFunction();
+        const warningForNoLims = document.getElementById("warningForNoLims");
+        warningForNoLims.style.display = "none";
+        const continueUnsafely = document.getElementById("continueUnsafely");
+        const continueSafely = document.getElementById("continueSafely");
+
+        continueUnsafely.onclick = letThereBeDragons;
+
+        continueSafely.onclick = continueSafelyFunc;
+
+        function letThereBeDragons() {
+            warningForNoLims.style.display = "none";
+            chats.style.display = "grid";
+            sendMsgBtn.style.display = "grid";
+            settBtn.style.display = "grid";
+            settBtnRoom.style.display = "grid";
+            typeHere.style.display = "grid";
+            chatLogText.style.display = "grid";
+            typeAreaText.style.display = "grid";
+        }
+
+        function continueSafelyFunc() {
+            userEnabledExtraProt = true;
+            warningForNoLims.style.display = "none";
+            chats.style.display = "grid";
+            sendMsgBtn.style.display = "grid";
+            settBtn.style.display = "grid";
+            settBtnRoom.style.display = "grid";
+            typeHere.style.display = "grid";
+            chatLogText.style.display = "grid";
+            typeAreaText.style.display = "grid"; 
+        }
+
+
+        sendMsgBtn.onclick = sendMessageFunction;
         
         async function sendMessageFunction() {
             latestChat = typeHere.value;
+            const sentAt = new Date().toLocaleTimeString();
             typeHere.value = "";
             let sanitizedChat = isTextProfane(latestChat) ? "*chat was blocked*" : latestChat;
-            if (!roomID === "nolims") {
+            let finishedChat = username + ": " + sanitizedChat; 
+            let finishedChatNoLims = username + ": " + latestChat;   
+            let displayChatForUser =  sentAt + " | You: " + sanitizedChat;   
+            let displayChatForNoLims = sentAt + " | You: " + latestChat;
+            if (roomID === "nolims") {
                 try {
-                    await uploadToServer(sanitizedChat);
+                    await uploadToServer(finishedChatNoLims);
+                    chatLog.unshift(displayChatForNoLims);
                 } catch (error) {
                     console.error(error)
                     return
                 }
             } else {
                 try {
-                    await uploadToServer(latestChat);
+                    await uploadToServer(finishedChat);
+                    chatLog.unshift(displayChatForUser);
                 } catch (error) {
                     console.error(error)
                     return
                 }
             }
+            chats.value = chatLog.join("\n");
         }
 
         async function uploadToServer(chatSent) {
@@ -199,7 +260,7 @@
         async function establishRoom() {
             let roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
             let roomPromptLengthClean = roomPrompt.replaceAll(" ", "").length;
-            while (roomPromptLengthClean === "LIST") {
+            while (roomPrompt === "LIST") {
                 alert(`main01 - starting chat
                 main02 - extention of main chat
                 nolims - no filter chat
@@ -209,40 +270,64 @@
                 MAKE YOUR OWN CHAT - NAME HAS TO BE UNDER SIX CHARACTERS
                 `)
                 roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
+                roomPromptLengthClean = roomPrompt.replaceAll(" ", "").length;
             }
             if (roomPromptLengthClean < 6 || roomPromptLengthClean > 6) {
-                while (roomPromptLengthClean < 6 || roomPromptLengthClean > 6) {
+                while (roomPromptLengthClean < 6 || roomPromptLengthClean > 6 || roomPrompt == null) {
                     roomPrompt = prompt("What room would you like to go to?");
                     roomPromptLengthClean = roomPrompt.replaceAll(" ", "").length;
                 }
-                roomID = roomPrompt;
-                roomRef = doc(db, "chats", roomID)
-                chatLog = [];
-                rawUserMsgs = [];
-                rawUserMsgsBack = [];
-                chats.value = "";
-                if (unsubscribeListener) unsubscribeListener();
-                unsubscribeListener = startChatListener();
+            }
+            roomID = roomPrompt;
+            roomRef = doc(db, "chats", roomID)
+            await createChatIfNeeded();
+            chatLog = [];
+            rawUserMsgs = [];
+            rawUserMsgsBack = [];
+            chats.value = "";
+            if (unsubscribeListener) unsubscribeListener();
+            unsubscribeListener = startChatListener();
+            if (roomID === "nolims" && noLimsWarningShowed == false) {
+                noLimsWarningShowed = true;
+                warningForNoLims.style.display = "grid";
+                chats.style.display = "none";
+                sendMsgBtn.style.display = "none";
+                settBtn.style.display = "none";
+                settBtnRoom.style.display = "none";
+                typeHere.style.display = "none";
+                chatLogText.style.display = "none";
+                typeAreaText.style.display = "none";
             }
         }
 
         function startChatListener() {
             return onSnapshot(roomRef, (docSnap) => {
-            if (!docSnap.exists()) return
+                if (!docSnap.exists()) return
 
-            const data = docSnap.data();
+                const data = docSnap.data();
 
-            if (data.lastMessage === latestChat) return
-            if (!data.lastMessage) return;
+                if (data.lastMessage === latestChat) return
+                if (!data.lastMessage) return;
+                if (!data.lastChatDate) return;
 
-            const serverTimeNumber = data.lastChatDate.toDate().getTime();
-            let serverTimeOffset = serverTimeNumber - Date.now();
+                const serverTimeNumber = data.lastChatDate.toDate().getTime();
+                let serverTimeOffset = serverTimeNumber - Date.now();
 
-            const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
+                const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
 
-            latestChat = sentAt + " | " + data.lastMessage;
-            chatLog.unshift(latestChat);
-            chats.value = chatLog.join("\n");
+                latestChat = sentAt + " | " + data.lastMessage;
+                
+                if (data.lastMessage.startsWith(username + ": ")) {
+                    return
+                } else {
+                    if (userEnabledExtraProt && isTextProfane(data.lastMessage)) {
+                        chatLog.unshift(sentAt + " | " + data.lastUsername + ": *a warm blanket drifted over this chat*");
+                        chats.value = chatLog.join("\n");
+                    } else {
+                        chatLog.unshift(latestChat);
+                        chats.value = chatLog.join("\n");
+                    }
+                }
             })
         }
 
@@ -267,7 +352,7 @@
             }
         }
 
-        settBtnRoom.onclick = establishRoom();
+        settBtnRoom.onclick = establishRoom;
 
         const adjectives = [
             "Swift",
@@ -383,7 +468,7 @@
             if (initialPrompt === "yes" || initialPrompt === "Yes") {
                 let usernamePrompt = prompt("Username?");
                 if (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
-                    while (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
+                    while (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " " || usernamePrompt == null) {
                         alert("Username is profane or invalid.");
                         usernamePrompt = prompt("Username?");
                     }
@@ -880,7 +965,7 @@
             return false
         }
 
-        establishUsername();
+        //establishUsername(); i might bring this back, but it's REALLY annoying for testing
     </script>
     </body>
 </html>
