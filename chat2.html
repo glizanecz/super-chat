@@ -236,7 +236,7 @@
             if (!data.lastMessage) return;
 
             const serverTimeNumber = data.lastChatDate.toDate().getTime();
-            serverTimeOffset = serverTimeNumber - Date.now();
+            let serverTimeOffset = serverTimeNumber - Date.now();
 
             const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
 
@@ -322,80 +322,80 @@
             "Ancient"
             ];
 
-            const nouns = [
-            "Hacker",
-            "Biker",
-            "Coder",
-            "Warrior",
-            "Knight",
-            "Runner",
-            "Hunter",
-            "Wizard",
-            "Ninja",
-            "Pirate",
-            "Gamer",
-            "Driver",
-            "Artist",
-            "Builder",
-            "Explorer",
-            "Soldier",
-            "Samurai",
-            "Rider",
-            "Engineer",
-            "Scientist",
-            "Streamer",
-            "Creator",
-            "Miner",
-            "Farmer",
-            "Pilot",
-            "Captain",
-            "Detective",
-            "Spy",
-            "Inventor",
-            "Champion",
-            "Boxer",
-            "Skater",
-            "Surfer",
-            "Fighter",
-            "Guardian",
-            "Assassin",
-            "Traveler",
-            "Nomad",
-            "Mercenary",
-            "Robot",
-            "Android",
-            "Dragon",
-            "Wolf",
-            "Falcon",
-            "Tiger",
-            "Panther",
-            "Phoenix",
-            "Viking",
-            "Cowboy",
-            "Gladiator"
-            ];
+        const nouns = [
+        "Hacker",
+        "Biker",
+        "Coder",
+        "Warrior",
+        "Knight",
+        "Runner",
+        "Hunter",
+        "Wizard",
+        "Ninja",
+        "Pirate",
+        "Gamer",
+        "Driver",
+        "Artist",
+        "Builder",
+        "Explorer",
+        "Soldier",
+        "Samurai",
+        "Rider",
+        "Engineer",
+        "Scientist",
+        "Streamer",
+        "Creator",
+        "Miner",
+        "Farmer",
+        "Pilot",
+        "Captain",
+        "Detective",
+        "Spy",
+        "Inventor",
+        "Champion",
+        "Boxer",
+        "Skater",
+        "Surfer",
+        "Fighter",
+        "Guardian",
+        "Assassin",
+        "Traveler",
+        "Nomad",
+        "Mercenary",
+        "Robot",
+        "Android",
+        "Dragon",
+        "Wolf",
+        "Falcon",
+        "Tiger",
+        "Panther",
+        "Phoenix",
+        "Viking",
+        "Cowboy",
+        "Gladiator"
+        ];
 
 
-            let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
+        let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
 
-            async function establishUsername() {
-                let initialPrompt = prompt("Would you like a username?");
-                if (initialPrompt === "yes" || initialPrompt === "Yes") {
-                    let usernamePrompt = prompt("Username?");
-                    if (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
-                        while (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
-                            alert("Username is profane or invalid.");
-                            usernamePrompt = prompt("Username?");
-                        }
+        async function establishUsername() {
+            let initialPrompt = prompt("Would you like a username?");
+            if (initialPrompt === "yes" || initialPrompt === "Yes") {
+                let usernamePrompt = prompt("Username?");
+                if (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
+                    while (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
+                        alert("Username is profane or invalid.");
+                        usernamePrompt = prompt("Username?");
                     }
-                    username = usernamePrompt;
-                } else {
-                    username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
-                    return
                 }
+                username = usernamePrompt;
+            } else {
+                username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
+                return
             }
-            //BLOCKED WORDS FOR CHAT, GITHUB I AM NOT SPREADING HATE
-            const blockedWords = [
+        }
+        //BLOCKED WORDS FOR CHAT, GITHUB I AM NOT SPREADING HATE
+        const blockedWords = [
             // fuck
             "fuck",
             "fucks",
@@ -834,55 +834,53 @@
             "gew",
         ];
 
+        function isTextProfane(input) {
+            let normalizedMessage = input.replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a").replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "A").replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e").replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "E").replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i").replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "I").replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o").replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "O").replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u").replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "U").replace(/[ýÿŷȳẏƴʏ]/g, "y").replace(/[ÝŸŶȲẎƳ]/g, "Y").replace(/[çćĉċč¢ɔ]/g, "c").replace(/[ÇĆĈĊČ¢Ɔ]/g, "C").replace(/[ďđđð]/g, "d").replace(/[ĎĐĐÐ]/g, "D").replace(/[ĝğġģḡ]/g, "g").replace(/[ĜĞĠĢḠ]/g, "G").replace(/[ĥħ]/g, "h").replace(/[ĤĦ]/g, "H").replace(/[ĺļľłł]/g, "l").replace(/[ĹĻĽŁŁ]/g, "L").replace(/[ñńņňŉŋ]/g, "n").replace(/[ÑŃŅŇŊ]/g, "N").replace(/[ŕŗř]/g, "r").replace(/[ŔŖŘ]/g, "R").replace(/[śŝşšșß]/g, "s").replace(/[ŚŜŞŠȘ]/g, "S").replace(/[ţťŧț]/g, "t").replace(/[ŢŤŦȚ]/g, "T").replace(/[źżžž]/g, "z").replace(/[ŹŻŽŽ]/g, "Z").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase();
+            let normalizedMessageNoSpace = input.replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/\s/g, "").replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a").replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "A").replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e").replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "E").replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i").replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "I").replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o").replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "O").replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u").replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "U").replace(/[ýÿŷȳẏƴʏ]/g, "y").replace(/[ÝŸŶȲẎƳ]/g, "Y").replace(/[çćĉċč¢ɔ]/g, "c").replace(/[ÇĆĈĊČ¢Ɔ]/g, "C").replace(/[ďđđð]/g, "d").replace(/[ĎĐĐÐ]/g, "D").replace(/[ĝğġģḡ]/g, "g").replace(/[ĜĞĠĢḠ]/g, "G").replace(/[ĥħ]/g, "h").replace(/[ĤĦ]/g, "H").replace(/[ĺļľłł]/g, "l").replace(/[ĹĻĽŁŁ]/g, "L").replace(/[ñńņňŉŋ]/g, "n").replace(/[ÑŃŅŇŊ]/g, "N").replace(/[ŕŗř]/g, "r").replace(/[ŔŖŘ]/g, "R").replace(/[śŝşšșß]/g, "s").replace(/[ŚŜŞŠȘ]/g, "S").replace(/[ţťŧț]/g, "t").replace(/[ŢŤŦȚ]/g, "T").replace(/[źżžž]/g, "z").replace(/[ŹŻŽŽ]/g, "Z").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase();
+            let normalizedMessageNoSpecialChar = input.replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a").replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "a").replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e").replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "e").replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i").replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "i").replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o").replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "o").replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u").replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "u").replace(/[ýÿŷȳẏƴʏ]/g, "y").replace(/[ÝŸŶȲẎƳ]/g, "y").replace(/[çćĉċč¢ɔ]/g, "c").replace(/[ÇĆĈĊČ¢Ɔ]/g, "c").replace(/[ďđđð]/g, "d").replace(/[ĎĐĐÐ]/g, "d").replace(/[ĝğġģḡ]/g, "g").replace(/[ĜĞĠĢḠ]/g, "g").replace(/[ĥħ]/g, "h").replace(/[ĤĦ]/g, "h").replace(/[ĺļľłł]/g, "l").replace(/[ĹĻĽŁŁ]/g, "l").replace(/[ñńņňŉŋ]/g, "n").replace(/[ÑŃŅŇŊ]/g, "n").replace(/[ŕŗř]/g, "r").replace(/[ŔŖŘ]/g, "r").replace(/[śŝşšșß]/g, "s").replace(/[ŚŜŞŠȘ]/g, "s").replace(/[ţťŧț]/g, "t").replace(/[ŢŤŦȚ]/g, "t").replace(/[źżžž]/g, "z").replace(/[ŹŻŽŽ]/g, "z").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase().replace(/[^a-z]/g, "")
+            let normalizedMessageNoAnything = input.replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯèéêëēĕėęěȅȇȩɇɛÈÉÊËĒĔĖĘĚȄȆȨɆƐìíîïĩīĭįıǐȉȋɨÌÍÎÏĨĪĬĮİǏȈȊƗòóôõöøōŏőǒǫǭǿȍȏɔÒÓÔÕÖØŌŎŐǑǪǬǾȌȎƆùúûüũūŭůűųǔǖǘǚǜʉÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄýÿŷȳẏƴʏÝŸŶȲẎƳçćĉċč¢ÇĆĈĊČďđðĎĐÐĝğġģḡĜĞĠĢḠĥħĤĦĺļľłĹĻĽŁñńņňŉŋÑŃŅŇŊŕŗřŔŖŘśŝşšșßŚŜŞŠȘţťŧțŢŤŦȚźżžŹŻŽ]/g, "").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase().replace(/[^a-z]/g, "");
+            let oneNormalized = normalizedMessage.replace(/(.)\1+/g, "$1");
+            let twoNormalized = normalizedMessageNoSpace.replace(/(.)\1+/g, "$1");
+            let threeNormalized = normalizedMessageNoSpecialChar.replace(/(.)\1+/g, "$1");
+            let fourNormalized = normalizedMessageNoAnything.replace(/(.)\1+/g, "$1");
+            const hasBlockedWord = blockedWords.some(word => 
+            normalizedMessage.includes(word)
+            );
+            const hasBlockedWordSpace = blockedWords.some(word => 
+            normalizedMessageNoSpace.includes(word)
+            );
 
+            const hasBlockedWordSpecChar = blockedWords.some(word => 
+            normalizedMessageNoSpecialChar.includes(word)
+            );
 
-            function isTextProfane(input) {
-                let normalizedMessage = input.replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a").replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "A").replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e").replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "E").replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i").replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "I").replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o").replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "O").replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u").replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "U").replace(/[ýÿŷȳẏƴʏ]/g, "y").replace(/[ÝŸŶȲẎƳ]/g, "Y").replace(/[çćĉċč¢ɔ]/g, "c").replace(/[ÇĆĈĊČ¢Ɔ]/g, "C").replace(/[ďđđð]/g, "d").replace(/[ĎĐĐÐ]/g, "D").replace(/[ĝğġģḡ]/g, "g").replace(/[ĜĞĠĢḠ]/g, "G").replace(/[ĥħ]/g, "h").replace(/[ĤĦ]/g, "H").replace(/[ĺļľłł]/g, "l").replace(/[ĹĻĽŁŁ]/g, "L").replace(/[ñńņňŉŋ]/g, "n").replace(/[ÑŃŅŇŊ]/g, "N").replace(/[ŕŗř]/g, "r").replace(/[ŔŖŘ]/g, "R").replace(/[śŝşšșß]/g, "s").replace(/[ŚŜŞŠȘ]/g, "S").replace(/[ţťŧț]/g, "t").replace(/[ŢŤŦȚ]/g, "T").replace(/[źżžž]/g, "z").replace(/[ŹŻŽŽ]/g, "Z").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase();
-                let normalizedMessageNoSpace = input.replace(/4/g, "a").replace(/@/g, "a").replace(/8/g, "b").replace(/\(/g, "c").replace(/3/g, "e").replace(/6/g, "g").replace(/9/g, "g").replace(/1/g, "i").replace(/!/g, "i").replace(/\|/g, "l").replace(/0/g, "o").replace(/5/g, "s").replace(/\$/g, "s").replace(/7/g, "t").replace(/\+/g, "t").replace(/2/g, "z").replace(/\s/g, "").replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a").replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "A").replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e").replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "E").replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i").replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "I").replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o").replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "O").replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u").replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "U").replace(/[ýÿŷȳẏƴʏ]/g, "y").replace(/[ÝŸŶȲẎƳ]/g, "Y").replace(/[çćĉċč¢ɔ]/g, "c").replace(/[ÇĆĈĊČ¢Ɔ]/g, "C").replace(/[ďđđð]/g, "d").replace(/[ĎĐĐÐ]/g, "D").replace(/[ĝğġģḡ]/g, "g").replace(/[ĜĞĠĢḠ]/g, "G").replace(/[ĥħ]/g, "h").replace(/[ĤĦ]/g, "H").replace(/[ĺļľłł]/g, "l").replace(/[ĹĻĽŁŁ]/g, "L").replace(/[ñńņňŉŋ]/g, "n").replace(/[ÑŃŅŇŊ]/g, "N").replace(/[ŕŗř]/g, "r").replace(/[ŔŖŘ]/g, "R").replace(/[śŝşšșß]/g, "s").replace(/[ŚŜŞŠȘ]/g, "S").replace(/[ţťŧț]/g, "t").replace(/[ŢŤŦȚ]/g, "T").replace(/[źżžž]/g, "z").replace(/[ŹŻŽŽ]/g, "Z").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase();
-                let normalizedMessageNoSpecialChar = input.replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐ]/g, "a").replace(/[ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯ]/g, "a").replace(/[èéêëēĕėęěȅȇȩɇɛ]/g, "e").replace(/[ÈÉÊËĒĔĖĘĚȄȆȨɆƐ]/g, "e").replace(/[ìíîïĩīĭįıǐȉȋɨ]/g, "i").replace(/[ÌÍÎÏĨĪĬĮİǏȈȊƗ]/g, "i").replace(/[òóôõöøōŏőǒǫǭőøǿȍȏɔ]/g, "o").replace(/[ÒÓÔÕÖØŌŎŐǑǪǬŐØǾȌȎƆ]/g, "o").replace(/[ùúûüũūŭůűųǔǖǘǚǜʉ]/g, "u").replace(/[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄ]/g, "u").replace(/[ýÿŷȳẏƴʏ]/g, "y").replace(/[ÝŸŶȲẎƳ]/g, "y").replace(/[çćĉċč¢ɔ]/g, "c").replace(/[ÇĆĈĊČ¢Ɔ]/g, "c").replace(/[ďđđð]/g, "d").replace(/[ĎĐĐÐ]/g, "d").replace(/[ĝğġģḡ]/g, "g").replace(/[ĜĞĠĢḠ]/g, "g").replace(/[ĥħ]/g, "h").replace(/[ĤĦ]/g, "h").replace(/[ĺļľłł]/g, "l").replace(/[ĹĻĽŁŁ]/g, "l").replace(/[ñńņňŉŋ]/g, "n").replace(/[ÑŃŅŇŊ]/g, "n").replace(/[ŕŗř]/g, "r").replace(/[ŔŖŘ]/g, "r").replace(/[śŝşšșß]/g, "s").replace(/[ŚŜŞŠȘ]/g, "s").replace(/[ţťŧț]/g, "t").replace(/[ŢŤŦȚ]/g, "t").replace(/[źżžž]/g, "z").replace(/[ŹŻŽŽ]/g, "z").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase().replace(/[^a-z]/g, "")
-                let normalizedMessageNoAnything = input.replace(/[àáâãäåāăąǎǟǡǻȁȃȧⱥɐÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦⱯèéêëēĕėęěȅȇȩɇɛÈÉÊËĒĔĖĘĚȄȆȨɆƐìíîïĩīĭįıǐȉȋɨÌÍÎÏĨĪĬĮİǏȈȊƗòóôõöøōŏőǒǫǭǿȍȏɔÒÓÔÕÖØŌŎŐǑǪǬǾȌȎƆùúûüũūŭůűųǔǖǘǚǜʉÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛɄýÿŷȳẏƴʏÝŸŶȲẎƳçćĉċč¢ÇĆĈĊČďđðĎĐÐĝğġģḡĜĞĠĢḠĥħĤĦĺļľłĹĻĽŁñńņňŉŋÑŃŅŇŊŕŗřŔŖŘśŝşšșßŚŜŞŠȘţťŧțŢŤŦȚźżžŹŻŽ]/g, "").normalize("NFKC").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🇦","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🇴","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("🅰️","a").replaceAll("🅰","a").replaceAll("🅱️","b").replaceAll("🅱","b").replaceAll("©️","c").replaceAll("©","c").replaceAll("ℹ️","i").replaceAll("ℹ","i").replaceAll("Ⓜ️","m").replaceAll("Ⓜ","m").replaceAll("🅾️","o").replaceAll("🅾","o").replaceAll("🅿️","p").replaceAll("🅿","p").replaceAll("®️","r").replaceAll("®","r").replaceAll("™️","tm").replaceAll("™","tm").replaceAll("℠️","sm").replaceAll("℠","sm").replaceAll("🇦","a").replaceAll("🇧","b").replaceAll("🇨","c").replaceAll("🇩","d").replaceAll("🇪","e").replaceAll("🇫","f").replaceAll("🇬","g").replaceAll("🇭","h").replaceAll("🇮","i").replaceAll("🇯","j").replaceAll("🇰","k").replaceAll("🇱","l").replaceAll("🇲","m").replaceAll("🇳","n").replaceAll("🇴","o").replaceAll("🇵","p").replaceAll("🇶","q").replaceAll("🇷","r").replaceAll("🇸","s").replaceAll("🇹","t").replaceAll("🇺","u").replaceAll("🇻","v").replaceAll("🇼","w").replaceAll("🇽","x").replaceAll("🇾","y").replaceAll("🇿","z").replaceAll("🆎","ab").replaceAll("🆑","cl").replaceAll("🆒","cool").replaceAll("🆓","free").replaceAll("🆔","id").replaceAll("🆕","new").replaceAll("🆖","ng").replaceAll("🆗","ok").replaceAll("🆘","sos").replaceAll("🆙","up").replaceAll("🆚","vs").replaceAll("℅","co").replaceAll("℆","cu").replaceAll("℀","ac").replaceAll("℁","as").replaceAll("№","no").replaceAll("℡","tel").replaceAll("℻","fax").toLowerCase().replace(/[^a-z]/g, "");
-                let oneNormalized = normalizedMessage.replace(/(.)\1+/g, "$1");
-                let twoNormalized = normalizedMessageNoSpace.replace(/(.)\1+/g, "$1");
-                let threeNormalized = normalizedMessageNoSpecialChar.replace(/(.)\1+/g, "$1");
-                let fourNormalized = normalizedMessageNoAnything.replace(/(.)\1+/g, "$1");
-                const hasBlockedWord = blockedWords.some(word => 
-                normalizedMessage.includes(word)
-                );
-                const hasBlockedWordSpace = blockedWords.some(word => 
-                normalizedMessageNoSpace.includes(word)
-                );
+            const hasBlockedWordLang = blockedWords.some(word => 
+            normalizedMessageNoAnything.includes(word)
+            );  
 
-                const hasBlockedWordSpecChar = blockedWords.some(word => 
-                normalizedMessageNoSpecialChar.includes(word)
-                );
+            const oneNormal = blockedWords.some(word => 
+            oneNormalized.includes(word)
+            );
+            const twoNormal = blockedWords.some(word => 
+            twoNormalized.includes(word)
+            );
 
-                const hasBlockedWordLang = blockedWords.some(word => 
-                normalizedMessageNoAnything.includes(word)
-                );  
+            const threeNormal = blockedWords.some(word => 
+            threeNormalized.includes(word)
+            );
 
-                const oneNormal = blockedWords.some(word => 
-                oneNormalized.includes(word)
-                );
-                const twoNormal = blockedWords.some(word => 
-                twoNormalized.includes(word)
-                );
+            const fourNormal = blockedWords.some(word => 
+            fourNormalized.includes(word)
+            );  
 
-                const threeNormal = blockedWords.some(word => 
-                threeNormalized.includes(word)
-                );
-
-                const fourNormal = blockedWords.some(word => 
-                fourNormalized.includes(word)
-                );  
-
-                if (hasBlockedWord || hasBlockedWordSpace || hasBlockedWordLang || hasBlockedWordSpecChar || oneNormal || twoNormal || threeNormal || fourNormal) {
-                return true
-                }
-                
-                return false
+            if (hasBlockedWord || hasBlockedWordSpace || hasBlockedWordLang || hasBlockedWordSpecChar || oneNormal || twoNormal || threeNormal || fourNormal) {
+            return true
             }
+            
+            return false
+        }
 
-            establishUsername();
+        establishUsername();
     </script>
     </body>
 </html>
