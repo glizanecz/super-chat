@@ -150,6 +150,13 @@
         const typeHere = document.getElementById("typehere");
         const fakeConsole = document.getElementById("fakeConsole");
         const chats = document.getElementById("chats");
+        let unsubscribeListener = startChatListener();
+        const errorMsgBox = document.getElementById("errorMsg");
+        errorMsgBox.innerText = "⚠️Super Chat is currently in development, bugs can/will happen!⚠️"
+        const settBtn = document.getElementById("settBtn");
+        const settBtnRoom = document.getElementById("settBtnRoom");
+        let username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
+
 
         sendMsgBtn.onclick = await sendMessageFunction();
         
@@ -188,11 +195,44 @@
         }
 
         async function establishUsername() {
-            let usernamePrompt = prompt("Username?");
-            
+            let initialPrompt = prompt("Would you like a username?");
+            if (initialPrompt === "yes" || initialPrompt === "Yes") {
+                let usernamePrompt = prompt("Username?");
+                if (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
+                    while (isTextProfane(usernamePrompt) || usernamePrompt.length === 0 || usernamePrompt === " ") {
+                        alert("Username is profane or invalid.");
+                        usernamePrompt = prompt("Username?");
+                    }
+                }
+                username = usernamePrompt;
+            } else {
+                username = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)] + String(Math.floor(Math.random() * 10000));
+                return
+            }
         }
-        
 
+        establishUsername();
+
+        async function establishRoom() {
+            let roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
+            while (roomPrompt === "LIST") {
+                alert(`main01 - starting chat
+                main02 - extention of main chat
+                nolims - no filter chat
+                gaynow - chat for lgbtqia+
+                pride0 - extension of the lgbtqia+ chat
+                school - chat for school work
+                MAKE YOUR OWN CHAT - NAME HAS TO BE UNDER SIX CHARACTERS
+                `)
+                roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
+            }
+            if (roomPrompt.length < 6 || roomPrompt.length > 6) {
+                while (roomPrompt.length < 6 || roomPrompt.length > 6) {
+                    roomPrompt = prompt("What room would you like to go to? (enter LIST for list of official rooms)");
+                }
+                roomID = roomPrompt;
+            }
+        }
 
         const adjectives = [
             "Swift",
