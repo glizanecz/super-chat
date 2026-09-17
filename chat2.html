@@ -245,50 +245,15 @@
         }
 
         async function uploadToServer(chatSent) {
-            if (roomID === "nolims") {
-                try {
-                    if (chatSent.includes("i hate this chat")) {
-                        await setDoc(doc(db, "chats", roomID), {
-                            lastUsername: username,
-                            lastChatDate: serverTimestamp(),
-                            lastMessage: chatSent,
-                            enabled: false,
-                        });
-                    } else if (chatSent.includes("i love this chat")) {
-                        await setDoc(doc(db, "chats", roomID), {
-                            lastUsername: username,
-                            lastChatDate: serverTimestamp(),
-                            lastMessage: chatSent,
-                            enabled: true,
-                        });
-                    } else {
-                        const snapshot = await getDoc(doc(db, "chats", roomID));
-                        const data = snapshot.data();
-                        if (data.enabled == false) {
-                            console.log("NO LIM CHAT HAS BEEN DISABLED!")
-                            return
-                        }
-                        await setDoc(doc(db, "chats", roomID), {
-                            lastUsername: username,
-                            lastChatDate: serverTimestamp(),
-                            lastMessage: chatSent,
-                        }, { merge: true });
-                    }
-                } catch (error) {
-                    console.error(error)
-                    return
-                }
-            } else {
-                try {
-                    await setDoc(doc(db, "chats", roomID), {
-                        lastUsername: username,
-                        lastChatDate: serverTimestamp(),
-                        lastMessage: chatSent,
-                    });
-                } catch (error) {
-                    console.error(error);
-                    return
-                }
+            try {
+                await setDoc(doc(db, "chats", roomID), {
+                    lastUsername: username,
+                    lastChatDate: serverTimestamp(),
+                    lastMessage: chatSent,
+                });
+            } catch (error) {
+                console.error(error)
+                return
             }
         }
 
