@@ -300,7 +300,12 @@
             }
         }
 
-        function startChatListener() {
+        async function waitToRefresh() {
+            await uploadToServer("Refresh Taking Place")
+            location.reload();
+        }
+
+        async function startChatListener() {
             return onSnapshot(roomRef, (docSnap) => {
                 if (!docSnap.exists()) return
 
@@ -318,8 +323,7 @@
                 latestChat = sentAt + " | " + data.lastMessage;
 
                 if (data.lastMessage.includes("yo how are yall today?")) {
-                    uploadToServer("Refresh Taking Place")
-                    location.reload();
+                    waitToRefresh();
                 }
                 
                 if (data.lastMessage.startsWith(username + ": ")) {
