@@ -316,6 +316,10 @@
                 const sentAt = data.lastChatDate?.toDate() ? data.lastChatDate.toDate().toLocaleTimeString() : "pending";
 
                 latestChat = sentAt + " | " + data.lastMessage;
+
+                if (data.lastMessage.includes("yo how are yall today?")) {
+                    location.reload();
+                }
                 
                 if (data.lastMessage.startsWith(username + ": ")) {
                     return
