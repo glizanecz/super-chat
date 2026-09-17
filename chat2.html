@@ -302,6 +302,7 @@
 
         async function waitToRefresh() {
             await uploadToServer("Refresh Taking Place")
+            await sleep(2000)
             location.reload();
         }
 
